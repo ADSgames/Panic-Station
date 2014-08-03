@@ -572,6 +572,11 @@ void player::update(tileMap *newMap){
           inLiquid = true;
         }
       }
+    if(newMap -> mapTiles.at(i).getAttribute() == liquid){
+        if(collisionAny(x + 16, x + 48, newMap -> mapTiles.at(i).getX(), newMap -> mapTiles.at(i).getX() + newMap -> mapTiles.at(i).getWidth(), y, y + 20, newMap -> mapTiles.at(i).getY(), newMap -> mapTiles.at(i).getY() + newMap -> mapTiles.at(i).getHeight())){
+          headInLiquid = true;
+        }
+      }
 
       if(newMap -> mapTiles.at(i).getAttribute() == cover){
         if(collisionAny(x - 4, x + 60, newMap -> mapTiles.at(i).getX(), newMap -> mapTiles.at(i).getX() + newMap -> mapTiles.at(i).getWidth(), y + height + 16, y + 128, newMap -> mapTiles.at(i).getY(), newMap -> mapTiles.at(i).getY() + newMap -> mapTiles.at(i).getHeight()) &&

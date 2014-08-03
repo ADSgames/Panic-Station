@@ -24,9 +24,7 @@ void Intro::draw( bool toScreen)
   highcolor_fade_in( intro[0],16);
   rest( 500);
   highcolor_fade_out( 16);
-  highcolor_fade_in( intro[1],16);
-  rest( 500);
-  highcolor_fade_out( 16);
+
 }
 
 Intro::~Intro()
