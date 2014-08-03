@@ -88,7 +88,7 @@ void Game::update()
     newBadGuy -> load_images();
     newBadGuy -> load_sounds();
     badGuy.push_back(newBadGuy);
-    rest(10);
+    rest(100);
   }
 
   // Back to menu

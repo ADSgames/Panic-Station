@@ -276,6 +276,8 @@ void tileMap::load(string fileName){
       }
     }
     read2.close();
+
+
   }
 }
 
@@ -305,6 +307,7 @@ void tileMap::draw_map(BITMAP* tempSprite){
       }
     }
   }
+
 }
 
 tileMap::~tileMap(){

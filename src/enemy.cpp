@@ -380,7 +380,14 @@ void enemy::update(tileMap *newMap, player *newPlayer){
           bullets.erase(bullets.begin() + i);
         }
       }
+
+    //Still falls when dead
     }
+
+
+
+
+
 
     canFall = true;
     bool smoothFall = false;
@@ -398,6 +405,9 @@ void enemy::update(tileMap *newMap, player *newPlayer){
           }
         }
       }
+    }
+    if(dead){
+        jumping=false;
     }
     //Health
     if(health<1){

@@ -1086,6 +1086,8 @@ void player::update(tileMap *newMap){
     walking_animation_sequence = 0;
     stop_sample(walk_stone);
   }
+ // if(collisionAny(badguy.getX(),badguy.getX()+32,x,x+32,badguy.getY(),badguy.getY()+128,y,y+128)){
+  //  health=0;
 
   // Not shooting anymore
   if(shooting){
