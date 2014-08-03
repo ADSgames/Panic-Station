@@ -114,6 +114,7 @@ class player{
     bool isSprinting;
     bool isCrouching;
     bool inLiquid;
+    bool headInLiquid;
 
     int shooting_animation_sequence;
     int walking_animation_sequence;
@@ -161,6 +162,7 @@ class player{
     SAMPLE* water_splash;
     SAMPLE* water_walk;
     SAMPLE* weapon_pickup;
+    SAMPLE* ammunition_pickup;
 
     //Esc key handler variables
     bool exit_menu_open;

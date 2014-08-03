@@ -259,6 +259,9 @@ void player::load_sounds(){
   if(!(weapon_pickup = load_sample("sounds/weapon_pickup.wav"))){
     abort_on_error( "Cannot find sounds/weapon_pickup.wav \n Please check your files and try again");
   }
+  if(!(ammunition_pickup = load_sample("sounds/ammunition_pickup.wav"))){
+    abort_on_error( "Cannot find sounds/ammunition_pickup.wav \n Please check your files and try again");
+  }
 }
 
 // Return X
@@ -366,7 +369,7 @@ void player::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
   if(!isReadingBlock){
   textprintf_ex(temp,pixelart_2,224,10,makecol(255,255,255),makecol(0,0,0),"%i",stamina );
   textprintf_ex(temp,pixelart_2,224,50,makecol(255,255,255),makecol(0,0,0),"%i",health );
-  if(inLiquid)textprintf_ex(temp,pixelart_2,224,85,makecol(255,255,255),makecol(0,0,0),"%i",oxygen );
+  if(headInLiquid)textprintf_ex(temp,pixelart_2,224,85,makecol(255,255,255),makecol(0,0,0),"%i",oxygen );
 
   if(currentWeapon!=0){
     if(weapon[currentWeapon].ammunition>9)textprintf_ex(temp,munro_large,480,70,makecol(255,255,255),makecol(0,0,-1),"%i",weapon[currentWeapon].ammunition);
@@ -385,7 +388,7 @@ void player::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
     }
   draw_sprite(temp,statusbar, 10, 10);
   draw_sprite(temp,statusbar, 10, 45);
-  if(inLiquid)draw_sprite(temp,statusbar, 10, 80);
+  if(headInLiquid)draw_sprite(temp,statusbar, 10, 80);
   if(currentWeapon==1)draw_sprite(temp,gui_pistol, 280, 10);
   if(currentWeapon==2)draw_sprite(temp,gui_mp5, 280, 10);
   if(currentWeapon==3)draw_sprite(temp,gui_ppsh, 280, 10);
@@ -393,7 +396,7 @@ void player::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
   if(currentWeapon==5)draw_sprite(temp,gui_remington, 280, 10);
   rectfill(temp, 14, 14, 14+((stamina*2)), 33, (255,255,(stamina*2)+55));
   rectfill(temp, 14, 49, 14+(health*2), 68, makecol((health*2)+55,0,0));
-  if(inLiquid)rectfill(temp, 14, 84, 14+(oxygen*2), 103, makecol((oxygen*2)+55,(oxygen*2)+55,(oxygen*2)+55));
+  if(headInLiquid)rectfill(temp, 14, 84, 14+(oxygen*2), 103, makecol((oxygen*2)+55,(oxygen*2)+55,(oxygen*2)+55));
   }
 
   if(isReadingBlock){
@@ -501,12 +504,12 @@ void player::update(tileMap *newMap){
   bool canClimbDown2 = false;
   bool canJump = true;
   bool canJumpUp = true;
-  bool headInLiquid = false;
   bool canStopCrouch = true;
   bool canCrouchLeft =  true;
   bool canCrouchRight = true;
   bool canSwimDown = true;
   inLiquid = false;
+  headInLiquid = false;
 
 
 
@@ -540,7 +543,7 @@ void player::update(tileMap *newMap){
           canClimbDown = false;
         }
       }
-      if(newMap -> mapTiles.at(i).getAttribute() == liquid){
+      if(newMap -> mapTiles.at(i).getAttribute() == solid){
         if(collisionAny(x + 16, x + 48, newMap -> mapTiles.at(i).getX(), newMap -> mapTiles.at(i).getX() + newMap -> mapTiles.at(i).getWidth(), y + 16, y + 144, newMap -> mapTiles.at(i).getY(), newMap -> mapTiles.at(i).getY() + newMap -> mapTiles.at(i).getHeight())){
           canSwimDown = false;
         }
@@ -623,20 +626,20 @@ void player::update(tileMap *newMap){
            newMap -> mapTiles.at(i).setType(0);
           }
 
+          int ammunitionAquired = 0;
+          if(newMap -> mapTiles.at(i).getType() == tile_pistol_magazine)ammunitionAquired=1;
 
-          if(newMap -> mapTiles.at(i).getType() == tile_pistol_magazine){
-            weapon[1].ammunition+=8;
-            newMap -> mapTiles.at(i).setType(0);
+          if(ammunitionAquired!=0){
+              weapon[ammunitionAquired].ammunition+=weapon[ammunitionAquired].magazineSize;
+              play_sample(ammunition_pickup,255,125,1000,0);
+              newMap -> mapTiles.at(i).setType(0);
+              ammunitionAquired=0;
           }
-          if(newMap -> mapTiles.at(i).getType() == tile_pistol_box){
-            weapon[1].ammunition+=50;
-            play_sample(pistol_boxget,255,125,1000,0);
-            newMap -> mapTiles.at(i).setType(0);
-          }
+
           if(newMap -> mapTiles.at(i).getType() == tile_medpack){
             health+=20;
             if(health>100)health=100;
-            newMap -> mapTiles.at(i).setType(0);
+
           }
         }
       }
@@ -911,9 +914,6 @@ void player::update(tileMap *newMap){
       }
     }
   }
-  //GUNS!!!!!!
-  if(weapon[1].aquired)
-  //WTF happened here ^^^^^^^^
 
   //Stamina
   if(stamina<100 && staminaLoop>10){
@@ -942,8 +942,7 @@ void player::update(tileMap *newMap){
     }
   }
   //Sink
-  if(inLiquid && canSwimDown)
-    y+=2;
+  if(inLiquid && canSwimDown)y+=2;
 
   if(key[KEY_LSHIFT] || joy[0].button[8].b){
     isSprinting=true;
