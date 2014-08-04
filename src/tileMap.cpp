@@ -194,6 +194,11 @@ void tileMap::load_images(){
   tileSprites[tile_minigun][0] = load_bitmap("images/blocks/minigun.png", NULL);
   tileSprites[tile_remington][0] = load_bitmap("images/blocks/remington.png", NULL);
 
+  tileSprites[tile_ammo_mp5][0] = load_bitmap("images/blocks/ammo_mp5.png", NULL);
+  tileSprites[tile_ammo_remington][0] = load_bitmap("images/blocks/ammo_remington.png", NULL);
+  tileSprites[tile_ammo_ppsh][0] = load_bitmap("images/blocks/ammo_ppsh.png", NULL);
+  tileSprites[tile_ammo_minigun][0] = load_bitmap("images/blocks/ammo_minigun.png", NULL);
+
   //NPC's
   tileSprites[tile_npc_allan][0] = load_bitmap("images/npc/allan.png", NULL);
   tileSprites[tile_npc_gerald][0] = load_bitmap("images/npc/gerald.png", NULL);

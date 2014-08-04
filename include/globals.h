@@ -189,6 +189,10 @@
 #define tile_minigun 135
 #define tile_remington 136
 
+#define tile_ammo_mp5 137
+#define tile_ammo_remington 138
+#define tile_ammo_ppsh 139
+#define tile_ammo_minigun 140
 
 
 

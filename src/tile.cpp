@@ -276,7 +276,18 @@ void tile::setType(int newType){
   else if(type == tile_remington){
     attribute = item;
   }
-
+  else if(type == tile_ammo_mp5){
+    attribute = item;
+  }
+  else if(type == tile_ammo_remington){
+    attribute = item;
+  }
+  else if(type == tile_ammo_ppsh){
+    attribute = item;
+  }
+  else if(type == tile_ammo_minigun){
+    attribute = item;
+  }
 //NPC's
   else if(type == tile_npc_allan){
     attribute = npc;

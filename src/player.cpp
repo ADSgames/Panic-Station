@@ -374,8 +374,10 @@ void player::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
   if(currentWeapon!=0){
     if(weapon[currentWeapon].ammunition>9)textprintf_ex(temp,munro_large,480,70,makecol(255,255,255),makecol(0,0,-1),"%i",weapon[currentWeapon].ammunition);
     if(weapon[currentWeapon].ammunition<10)textprintf_ex(temp,munro_large,480,70,makecol(255,255,255),makecol(0,0,-1),"0%i",weapon[currentWeapon].ammunition);
-    if(weapon[currentWeapon].magazine>9)textprintf_ex(temp,munro_large,510,70,makecol(255,255,255),makecol(0,0,-1),"/%i",weapon[currentWeapon].magazine);
-    if(weapon[currentWeapon].magazine<10)textprintf_ex(temp,munro_large,510,70,makecol(255,255,255),makecol(0,0,-1),"/0%i",weapon[currentWeapon].magazine);
+    if(weapon[currentWeapon].magazine>9 && weapon[currentWeapon].ammunition<100)textprintf_ex(temp,munro_large,512,70,makecol(255,255,255),makecol(0,0,-1),"/%i",weapon[currentWeapon].magazine);
+    if(weapon[currentWeapon].magazine<10)textprintf_ex(temp,munro_large,512,70,makecol(255,255,255),makecol(0,0,-1),"/0%i",weapon[currentWeapon].magazine);
+    if(weapon[currentWeapon].ammunition>99 && weapon[currentWeapon].ammunition<1000)textprintf_ex(temp,munro_large,530,70,makecol(255,255,255),makecol(0,0,-1),"/%i",weapon[currentWeapon].magazine);
+    if(weapon[currentWeapon].ammunition>999)textprintf_ex(temp,munro_large,550,70,makecol(255,255,255),makecol(0,0,-1),"/%i",weapon[currentWeapon].magazine);
   }
   textprintf_ex(temp,pixelart,5,180,makecol(255,255,255),makecol(0,0,0),"Deathcount:%i",deathcount);
   textprintf_ex(temp,pixelart,5,200,makecol(255,255,255),makecol(0,0,0),"Weapon:%i",currentWeapon );
@@ -628,6 +630,10 @@ void player::update(tileMap *newMap){
 
           int ammunitionAquired = 0;
           if(newMap -> mapTiles.at(i).getType() == tile_pistol_magazine)ammunitionAquired=1;
+          if(newMap -> mapTiles.at(i).getType() == tile_ammo_mp5)ammunitionAquired=2;
+          if(newMap -> mapTiles.at(i).getType() == tile_ammo_ppsh)ammunitionAquired=3;
+          if(newMap -> mapTiles.at(i).getType() == tile_ammo_minigun)ammunitionAquired=4;
+          if(newMap -> mapTiles.at(i).getType() == tile_ammo_remington)ammunitionAquired=5;
 
           if(ammunitionAquired!=0){
               weapon[ammunitionAquired].ammunition+=weapon[ammunitionAquired].magazineSize;
