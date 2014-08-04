@@ -20,8 +20,8 @@ Editor::Editor()
   FONT *f1, *f2, *f3, *f4, *f5;
 
   //Sets Font
-  if(!(f1 = load_font("fonts/arial_black.pcx", NULL, NULL))){
-    abort_on_error( "Cannot find fonts/arial_black.pcx \n Please check your files and try again");
+  if(!(f1 = load_font("fonts/pixelart_2.pcx", NULL, NULL))){
+    abort_on_error( "Cannot find fonts/pixelart_2.pcx \n Please check your files and try again");
   }
   f2 = extract_font_range(f1, ' ', 'A'-1);
   f3 = extract_font_range(f1, 'A', 'Z');
@@ -282,7 +282,29 @@ void Editor::update()
         }
       }
     }
-
+    if( key[KEY_K]){
+      //Check for collision
+      if( layer == 1){
+        for(int i = 0; i < tile_map -> mapTiles.size(); i++){
+          if(collisionAny(mouseX()  + tile_map -> x, mouseX()  + tile_map -> x, tile_map -> mapTiles.at(i).getX(), tile_map -> mapTiles.at(i).getX() + 64, mouseY() + tile_map -> y, mouseY() + tile_map -> y, tile_map -> mapTiles.at(i).getY(), tile_map -> mapTiles.at(i).getY() + 64)){
+            exampleTile -> setX(0);
+            exampleTile -> setY(0);
+            selectedTileType = tile_map -> mapTiles.at(i).getType();
+            exampleTile -> setType(selectedTileType);
+          }
+        }
+      }
+      else{
+        for(int i = 0; i < tile_map -> mapTilesBack.size(); i++){
+          if(collisionAny(mouseX()  + tile_map -> x, mouseX()  + tile_map -> x, tile_map -> mapTilesBack.at(i).getX(), tile_map -> mapTilesBack.at(i).getX() + 64, mouseY() + tile_map -> y, mouseY() + tile_map -> y, tile_map -> mapTilesBack.at(i).getY(), tile_map -> mapTilesBack.at(i).getY() + 64)){
+            exampleTile -> setX(0);
+            exampleTile -> setY(0);
+            selectedTileType = tile_map -> mapTilesBack.at(i).getType();
+            exampleTile -> setType(selectedTileType);
+          }
+        }
+      }
+    }
     // Save map
     if(key[KEY_S]){
       saving = true;
@@ -346,13 +368,13 @@ void Editor::draw( bool toScreen)
     exampleTile -> draw_tile( buffer, 0, 0, 0);
 
     // Map info
-    textprintf_ex(buffer,font,0,50,makecol(255,255,255),makecol(0,0,0),"height-%i width-%i", tile_map -> height, tile_map -> width);
+    textprintf_ex(buffer,font,0,100,makecol(0,0,0),-1,"height-%i width-%i", tile_map -> height, tile_map -> width);
 
     if(layer == 1){
-      textprintf_ex(buffer,font,0,100,makecol(255,255,255),makecol(0,0,0),"Editing Mode: Foreground");
+      textprintf_ex(buffer,font,0,150,makecol(0,255,0),-1,"Editing Mode: Foreground");
     }
     else if(layer == 0){
-      textprintf_ex(buffer,font,0,100,makecol(255,255,255),makecol(0,0,0),"Editing Mode: Background");
+      textprintf_ex(buffer,font,0,150,makecol(255,0,0),-1,"Editing Mode: Background");
     }
 
     // Cursor
