@@ -34,6 +34,9 @@ Menu::Menu()
   if(!(levelSelectNumber = load_bitmap( ("images/gui/levelSelectNumber.png"), NULL))){
     abort_on_error( "Cannot find image images/gui/levelSelectNumber.png \n Please check your files and try again");
   }
+  if(!(filter = load_bitmap( ("images/filter.png"), NULL))){
+    abort_on_error( "Cannot find image images/filter.png \n Please check your files and try again");
+  }
 
   //Load sound effects
   if(!(click = load_sample(("sounds/click.wav")))){
@@ -226,6 +229,7 @@ void Menu::draw( bool toScreen)
 
   // Cursor
   stretch_sprite(buffer, cursor[0], mouseX(), mouseY(), 21 * resDiv, 26 * resDiv);
+  draw_trans_sprite(buffer, filter, 0,0);
 
   // Select button
   if (mouse_b & 1 || key[KEY_ENTER] || joy[0].button[0].b){

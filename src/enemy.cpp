@@ -149,6 +149,7 @@ void enemy::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
       if(type==enemy_mutant){
             rectfill(temp,(x - tile_map_x),(y - tile_map_y),(x - tile_map_x)+52,(y - tile_map_y)-8,makecol(255,255,255));
             rectfill(temp,(x - tile_map_x)+2,(y - tile_map_y)-2,(x - tile_map_x)+health/2,(y - tile_map_y)-6,makecol(55+health*2,0,0));
+
       }
       if(type==enemy_sentry){
             rectfill(temp,(x - tile_map_x),(y - tile_map_y)-10,(x - tile_map_x)+52,(y - tile_map_y)-18,makecol(255,255,255));
@@ -181,7 +182,6 @@ void enemy::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
 //Movement
 void enemy::update(tileMap *newMap, player *newPlayer){
 
-
   //Only update if on screen (save CPU power)!
   bool onScreen = false;
   if(x + width - newMap -> x > 0 && x - newMap -> x < 1280 && y + height - newMap -> y > 0 && y - newMap -> y < 960){
@@ -189,6 +189,9 @@ void enemy::update(tileMap *newMap, player *newPlayer){
   }
   if(onScreen){
     if(!dead ){
+        if(collisionAny(x,x+64,character.getX(),character.getX()+64,y,y+128,character.getY(),character.getY()+128)){
+            character.setDead(true);
+        }
         if(fireRate!=0){
         bulletCounter++;
         if(bulletCounter>=fireRate){

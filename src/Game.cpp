@@ -7,6 +7,7 @@ Game::Game()
 
   // Other Sprites
   buffer = create_bitmap( 1280, 960);
+  filter = load_bitmap ( "images/filter.png", NULL);
 
   // Player
   character.load_images();
@@ -123,7 +124,9 @@ void Game::draw( bool toScreen)
   for(int i = 0; i < badGuy.size(); i++){
     badGuy.at(i) -> draw(buffer, tile_map -> x, tile_map -> y);
   }
-    character.draw(buffer, tile_map -> x, tile_map -> y);
+  character.draw(buffer, tile_map -> x, tile_map -> y);
+  draw_trans_sprite(buffer,filter,0,0);
+
   // Draw buffer
   if( toScreen){
     stretch_sprite( screen, buffer, 0, 0, SCREEN_W, SCREEN_H);
@@ -133,6 +136,7 @@ void Game::draw( bool toScreen)
 Game::~Game()
 {
   destroy_bitmap( buffer);
+  destroy_bitmap( filter);
 
   badGuy.clear();
 

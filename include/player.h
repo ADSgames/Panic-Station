@@ -39,6 +39,7 @@ class player{
 
     int getX();
     int getY();
+    int getHealth();
 
     int getAmmo1();
 
@@ -50,6 +51,8 @@ class player{
     vector<projectile>* getBullets();
 
     void setDead(bool newDead);
+    void setHealth(int newHealth);
+
     void spawncommand(tileMap *newMap);
 
     void update(tileMap *newMap);

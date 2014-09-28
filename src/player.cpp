@@ -274,6 +274,12 @@ int player::getY(){
   return y;
 }
 
+// Return Y
+int player::getHealth(){
+  return health;
+}
+
+
 // Finished level?
 bool player::getFinishLevel(){
   return finishLevel;
@@ -298,6 +304,12 @@ vector<projectile>* player::getBullets(){
 void player::setDead(bool newDead){
   dead = newDead;
 }
+
+//Set health
+void player::setHealth(int newHealth){
+  health = newHealth;
+}
+
 
 //Draw character
 void player::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
@@ -464,9 +476,7 @@ void player::spawncommand(tileMap *newMap){
 //  Movement
 void player::update(tileMap *newMap){
 
-
-
-  // Scroll Map
+    // Scroll Map
   if(y - newMap -> y < 400 && newMap -> y > 0){
     newMap -> y -= 16;
   }

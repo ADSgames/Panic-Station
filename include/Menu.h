@@ -20,6 +20,7 @@ class Menu : public GameState
   private:
     // Menu/GUI
     BITMAP *buffer, *levelSelectLeft, *levelSelectRight, *levelSelectNumber, *cursor[2], *menuselect, *menu, *menu_edit, *help;
+    BITMAP* filter;
     SAMPLE* click;
     FSOUND_STREAM* music;
 
