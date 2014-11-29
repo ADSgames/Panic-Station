@@ -25,7 +25,6 @@ class Game : public GameState
 {
     private:
       BITMAP* buffer;
-      BITMAP* filter;
 
       // Variables
       int animationFrame;

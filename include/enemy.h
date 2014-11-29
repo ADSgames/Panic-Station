@@ -68,7 +68,6 @@ class enemy{
     int walking_counter;
 
     vector<projectile> bullets;
-    player character;
 
     // 0-3 left, 4-7 right, 8 jump left 9 jump right 10 dead
     BITMAP* enemy_images[11];
