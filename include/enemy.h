@@ -9,7 +9,6 @@
 #include "tools.h"
 
 #include "tileMap.h"
-#include "projectile.h"
 #include "player.h"
 
 #define ANIMATION_SPEED 5

@@ -9,6 +9,7 @@
 #include "projectile.h"
 
 #include "tileMap.h"
+#include "enemy.h"
 
 #define ANIMATION_SPEED 5
 #define JUMPING_HEIGHT 192

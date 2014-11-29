@@ -146,6 +146,8 @@ void enemy::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
   }
   if(onScreen){
     if(!dead){
+    textprintf_ex(temp,font,224,100,makecol(255,255,255),makecol(0,0,0),"%i",character.getX());
+    textprintf_ex(temp,font,224,140,makecol(255,255,255),makecol(0,0,0),"%i",character.getY());
       if(type==enemy_mutant){
             rectfill(temp,(x - tile_map_x),(y - tile_map_y),(x - tile_map_x)+52,(y - tile_map_y)-8,makecol(255,255,255));
             rectfill(temp,(x - tile_map_x)+2,(y - tile_map_y)-2,(x - tile_map_x)+health/2,(y - tile_map_y)-6,makecol(55+health*2,0,0));
