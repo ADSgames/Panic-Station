@@ -54,42 +54,41 @@ void enemy::load_images(){
     walkChance = 20;
     jumpSpeed = 2;
     speed = 3;
-    health = 100;
     fireRate = 0;
 
+    health = 100;
   }
 
-    if(type == enemy_sentry){
-        enemy_images[0] = load_bitmap ( "images/enemys/sentry/left.png", NULL);
-        enemy_images[1] = load_bitmap ( "images/enemys/sentry/left.png", NULL);
-        enemy_images[2] = load_bitmap ( "images/enemys/sentry/left.png", NULL);
-        enemy_images[3] = load_bitmap ( "images/enemys/sentry/left.png", NULL);
+  if(type == enemy_sentry){
+    enemy_images[0] = load_bitmap ( "images/enemys/sentry/left.png", NULL);
+    enemy_images[1] = load_bitmap ( "images/enemys/sentry/left.png", NULL);
+    enemy_images[2] = load_bitmap ( "images/enemys/sentry/left.png", NULL);
+    enemy_images[3] = load_bitmap ( "images/enemys/sentry/left.png", NULL);
 
-        enemy_images[4] = load_bitmap ( "images/enemys/sentry/right.png", NULL);
-        enemy_images[5] = load_bitmap ( "images/enemys/sentry/right.png", NULL);
-        enemy_images[6] = load_bitmap ( "images/enemys/sentry/right.png", NULL);
-        enemy_images[7] = load_bitmap ( "images/enemys/sentry/right.png", NULL);
+    enemy_images[4] = load_bitmap ( "images/enemys/sentry/right.png", NULL);
+    enemy_images[5] = load_bitmap ( "images/enemys/sentry/right.png", NULL);
+    enemy_images[6] = load_bitmap ( "images/enemys/sentry/right.png", NULL);
+    enemy_images[7] = load_bitmap ( "images/enemys/sentry/right.png", NULL);
 
-        enemy_images[8] = load_bitmap ( "images/enemys/sentry/left.png", NULL);
-        enemy_images[9] = load_bitmap ( "images/enemys/sentry/right.png", NULL);
+    enemy_images[8] = load_bitmap ( "images/enemys/sentry/left.png", NULL);
+    enemy_images[9] = load_bitmap ( "images/enemys/sentry/right.png", NULL);
 
+    enemy_images[10] = load_bitmap ( "images/enemys/sentry/dead.png", NULL);
 
-        enemy_images[10] = load_bitmap ( "images/enemys/sentry/dead.png", NULL);
+    jumpChance = 0;
+    maxSteps = 0;
+    minSteps = 0;
+    jumpHeight = 0;
+    walkChance = 0;
+    jumpSpeed = 0;
+    speed = 0;
+    fireRate = 30;
 
-        jumpChance = 0;
-        maxSteps = 0;
-        minSteps = 0;
-        jumpHeight = 0;
-        walkChance = 0;
-        jumpSpeed = 0;
-        speed = 0;
-        fireRate = 30;
-        bulletSpeed = 30;
-        bulletDirection = -1;
-        bulletHeight = 20;
+    bulletSpeed = 30;
+    bulletDirection = -1;
+    bulletHeight = 20;
 
-        health = 500;
-
+    health = 500;
   }
   width = enemy_images[0] -> w;
   height = enemy_images[0] -> h;
@@ -113,7 +112,6 @@ void enemy::load_sounds(){
     getItem = load_sample("sounds/get_item.wav");
     getBonus = load_sample("sounds/get_bonus.wav");
   }
-
 }
 
 // Return X
@@ -125,7 +123,6 @@ int enemy::getX(){
 int enemy::getY(){
   return y;
 }
-
 
 // Dead?
 bool enemy::getDead(){
@@ -146,8 +143,8 @@ void enemy::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
   }
   if(onScreen){
     if(!dead){
-    textprintf_ex(temp,font,224,100,makecol(255,255,255),makecol(0,0,0),"%i",character.getX());
-    textprintf_ex(temp,font,224,140,makecol(255,255,255),makecol(0,0,0),"%i",character.getY());
+      textprintf_ex(temp,font,224,100,makecol(255,255,255),makecol(0,0,0),"%i",getX());
+      textprintf_ex(temp,font,224,140,makecol(255,255,255),makecol(0,0,0),"%i",getY());
       if(type==enemy_mutant){
             rectfill(temp,(x - tile_map_x),(y - tile_map_y),(x - tile_map_x)+52,(y - tile_map_y)-8,makecol(255,255,255));
             rectfill(temp,(x - tile_map_x)+2,(y - tile_map_y)-2,(x - tile_map_x)+health/2,(y - tile_map_y)-6,makecol(55+health*2,0,0));
@@ -182,23 +179,22 @@ void enemy::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
 
 //Movement
 void enemy::update(tileMap *newMap, player *newPlayer){
-
-
   //Only update if on screen (save CPU power)!
   bool onScreen = false;
   if(x + width - newMap -> x > 0 && x - newMap -> x < 1280 && y + height - newMap -> y > 0 && y - newMap -> y < 960){
     onScreen = true;
   }
   if(onScreen){
-    if(!dead ){
-        if(fireRate!=0){
+    if( !dead){
+      if(fireRate!=0){
         bulletCounter++;
         if(bulletCounter>=fireRate){
-            projectile newBullet( 0, x + 30, y + bulletHeight, bulletSpeed * bulletDirection);
-            bullets.push_back(newBullet);
-            bulletCounter=0;
-            }
-    }
+          projectile newBullet( 0, x + 30, y + bulletHeight, bulletSpeed * bulletDirection);
+          bullets.push_back(newBullet);
+          bulletCounter=0;
+        }
+      }
+
       //Collision stuff
       bool canMoveLeft = true;
       bool canMoveRight = true;
@@ -282,8 +278,7 @@ void enemy::update(tileMap *newMap, player *newPlayer){
       for(int i = 0; i < newPlayer -> getBullets() -> size(); i++){
         if(collisionAny(x, x + width, newPlayer -> getBullets() -> at(i).getX(), newPlayer -> getBullets() -> at(i).getX() + 64, y, y + height, newPlayer -> getBullets() -> at(i).getY(), newPlayer -> getBullets() -> at(i).getY() + 64)){
           newPlayer -> getBullets() -> at(i).setContact(true);
-          health-= newPlayer -> weapon[newPlayer -> currentWeapon].damage;
-
+          health -= newPlayer -> weapons[newPlayer -> currentWeapon] -> getDamage();
         }
       }
 

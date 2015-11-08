@@ -8,65 +8,20 @@ player::player(){
 
 
   //Define weapon attributes
-  weapon[0].ammunition = 100;
-  weapon[1].ammunition = 0;
-  weapon[2].ammunition = 0;
-  weapon[3].ammunition = 0;
-  weapon[4].ammunition = 0;
-  weapon[5].ammunition = 0;
+  weapons[0] = new weapon( 100, 0, 0, 0, 0, 0, 0, "images/HUD/pistol_small.png", "Arm");
+  weapons[1] = new weapon( 0, 60, 8, 0, 50, -1, 10, "images/HUD/pistol_small.png", "Pistol");
+  weapons[2] = new weapon( 0, 60, 30, 0, 100, 3, 10, "images/HUD/mp5_small.png", "MP5");
+  weapons[3] = new weapon( 0, 60, 71, 0, 200, 2, 10, "images/HUD/ppsh_small.png", "PPSH");
+  weapons[4] = new weapon( 0, 60, 500, 0, 1000, 0, 10, "images/HUD/minigun_small.png", "Minigun");
+  weapons[5] = new weapon( 0, 60, 5, 0, 200, 25, 10, "images/HUD/remington_small.png", "Remington");
 
-  weapon[1].speed=60;
-  weapon[2].speed=60;
-  weapon[3].speed=60;
-  weapon[4].speed=60;
-  weapon[5].speed=60;
+  weapons[1] -> setAquired(false);
+  weapons[2] -> setAquired(false);
+  weapons[3] -> setAquired(false);
+  weapons[4] -> setAquired(false);
+  weapons[5] -> setAquired(false);
 
-  weapon[1].magazineSize=8;
-  weapon[2].magazineSize=30;
-  weapon[3].magazineSize=71;
-  weapon[4].magazineSize=500;
-  weapon[5].magazineSize=5;
-
-  weapon[1].magazine=0;
-  weapon[2].magazine=0;
-  weapon[3].magazine=0;
-  weapon[4].magazine=0;
-  weapon[5].magazine=0;
-
-  weapon[1].reloadSpeed=50;
-  weapon[2].reloadSpeed=100;
-  weapon[3].reloadSpeed=200;
-  weapon[4].reloadSpeed=1000;
-  weapon[5].reloadSpeed=200;
-
-  weapon[1].rateOfFire=-1;
-  weapon[2].rateOfFire=3;
-  weapon[3].rateOfFire=2;
-  weapon[4].rateOfFire=0;
-  weapon[5].rateOfFire=25;
-
-  weapon[1].aquired=false;
-  weapon[2].aquired=false;
-  weapon[3].aquired=false;
-  weapon[4].aquired=false;
-  weapon[5].aquired=false;
-
-  weapon[1].bulletsFired=1;
-  weapon[2].bulletsFired=1;
-  weapon[3].bulletsFired=1;
-  weapon[4].bulletsFired=1;
-  weapon[5].bulletsFired=3;
-
-  weapon[1].damage=10;
-  weapon[2].damage=15;
-  weapon[3].damage=15;
-  weapon[4].damage=50;
-  weapon[5].damage=20;
-
-  triggerReleased=true;
-  canShoot=true;
-
-  reloadTicks = 0;
+  triggerReleased = true;
 
   stamina=100;
   staminaLoop=0;
@@ -82,7 +37,6 @@ player::player(){
   weaponScrollLoop = 0;
 
   fallheight = 0;
-
 
   material=0;
 
@@ -129,45 +83,27 @@ player::player(){
 //Load images of player
 // 0-3 left, 4-7 right, 8-11 up
 void player::load_images(){
-  player_images[0] = load_bitmap ( "images/character/left_1.png", NULL);
-  player_images[1] = load_bitmap ( "images/character/left_2.png", NULL);
-  player_images[2] = load_bitmap ( "images/character/left_3.png", NULL);
-  player_images[3] = load_bitmap ( "images/character/left_4.png", NULL);
+  player_images[0] = load_bitmap ( "images/character/walk_1.png", NULL);
+  player_images[1] = load_bitmap ( "images/character/walk_2.png", NULL);
+  player_images[2] = load_bitmap ( "images/character/walk_3.png", NULL);
+  player_images[3] = load_bitmap ( "images/character/walk_4.png", NULL);
 
-  player_images[4] = load_bitmap ( "images/character/right_1.png", NULL);
-  player_images[5] = load_bitmap ( "images/character/right_2.png", NULL);
-  player_images[6] = load_bitmap ( "images/character/right_3.png", NULL);
-  player_images[7] = load_bitmap ( "images/character/right_4.png", NULL);
+  player_images[4] = load_bitmap ( "images/character/up_1.png", NULL);
+  player_images[5] = load_bitmap ( "images/character/up_2.png", NULL);
+  player_images[6] = load_bitmap ( "images/character/up_3.png", NULL);
+  player_images[7] = load_bitmap ( "images/character/up_4.png", NULL);
 
-  player_images[8] = load_bitmap ( "images/character/up_1.png", NULL);
-  player_images[9] = load_bitmap ( "images/character/up_2.png", NULL);
-  player_images[10] = load_bitmap ( "images/character/up_3.png", NULL);
-  player_images[11] = load_bitmap ( "images/character/up_4.png", NULL);
+  player_images[8] = load_bitmap ( "images/character/jump_1.png", NULL);
+  player_images[9] = load_bitmap ( "images/character/jump_2.png", NULL);
+  player_images[10] = load_bitmap ( "images/character/jump_3.png", NULL);
+  player_images[11] = load_bitmap ( "images/character/jump_4.png", NULL);
+  player_images[12] = load_bitmap ( "images/character/jump_5.png", NULL);
+  player_images[13] = load_bitmap ( "images/character/jump_6.png", NULL);
 
-  player_images[12] = load_bitmap ( "images/character/jump_left_1.png", NULL);
-  player_images[13] = load_bitmap ( "images/character/jump_left_2.png", NULL);
-  player_images[14] = load_bitmap ( "images/character/jump_left_3.png", NULL);
-  player_images[15] = load_bitmap ( "images/character/jump_left_4.png", NULL);
-  player_images[16] = load_bitmap ( "images/character/jump_left_5.png", NULL);
-  player_images[17] = load_bitmap ( "images/character/jump_left_6.png", NULL);
+  player_images[15] = load_bitmap ( "images/character/crouch.png", NULL);
+  player_images[16] = load_bitmap ( "images/character/crouch_shoot.png", NULL);
 
-  player_images[18] = load_bitmap ( "images/character/jump_right_1.png", NULL);
-  player_images[19] = load_bitmap ( "images/character/jump_right_2.png", NULL);
-  player_images[20] = load_bitmap ( "images/character/jump_right_3.png", NULL);
-  player_images[21] = load_bitmap ( "images/character/jump_right_4.png", NULL);
-  player_images[22] = load_bitmap ( "images/character/jump_right_5.png", NULL);
-  player_images[23] = load_bitmap ( "images/character/jump_right_6.png", NULL);
-
-  player_images[24] = load_bitmap ( "images/character/shoot_left.png", NULL);
-  player_images[25] = load_bitmap ( "images/character/shoot_right.png", NULL);
-
-  player_images[30] = load_bitmap ( "images/character/crouch_right_1.png", NULL);
-  player_images[31] = load_bitmap ( "images/character/crouch_left_1.png", NULL);
-  player_images[32] = load_bitmap ( "images/character/crouch_shoot_right_1.png", NULL);
-  player_images[33] = load_bitmap ( "images/character/crouch_shoot_left_1.png", NULL);
-
-  player_images[34] = load_bitmap ( "images/character/blindfire_right_1.png", NULL);
-  player_images[35] = load_bitmap ( "images/character/blindfire_left_1.png", NULL);
+  player_images[17] = load_bitmap ( "images/character/idle_1.png", NULL);
 
   projectileSprites[0][0] = load_bitmap("images/laser.png", NULL);
   projectileSprites[0][1] = load_bitmap("images/laser.png", NULL);
@@ -178,6 +114,7 @@ void player::load_images(){
   statusbar = load_bitmap("images/HUD/statusbar.png", NULL);
   gui_paper = load_bitmap("images/HUD/gui_paper.png", NULL);
   gui_statue = load_bitmap("images/HUD/gui_statue.png", NULL);
+
   gui_pistol = load_bitmap("images/HUD/pistol.png", NULL);
   gui_mp5 = load_bitmap("images/HUD/mp5.png", NULL);
   gui_ppsh = load_bitmap("images/HUD/ppsh.png", NULL);
@@ -300,136 +237,147 @@ void player::setDead(bool newDead){
 }
 
 //Draw character
+// 0-3 walk, 4-7 up 8-13 jump, 14 shoot, 15-16 crouch
 void player::draw(BITMAP* temp, int tile_map_x, int tile_map_y){
-  if( !shooting){
-
-        //file_select_ex("Select Image","c:","GIF;JPG",480,100,50);
-
-    // Jumping
-    if(!jumping_animation_done){
-      if(characterDir == LEFT){
-        draw_sprite( temp, player_images[12 + jumping_animation_sequence/2], x - tile_map_x, y - tile_map_y);
-      }
-      else{
-        draw_sprite( temp, player_images[18 + jumping_animation_sequence/2], x - tile_map_x, y - tile_map_y);
-      }
+  // Jumping
+  if(!jumping_animation_done){
+    if(characterDir == LEFT){
+      draw_sprite( temp, player_images[8 + jumping_animation_sequence/2], x - tile_map_x, y - tile_map_y);
     }
-    // Jumping or falling
-    else if(jumping || canFall){
-      if(characterDir == LEFT){
-        draw_sprite( temp, player_images[17], x - tile_map_x, y - tile_map_y);
-      }
-      else{
-        draw_sprite( temp, player_images[23], x - tile_map_x, y - tile_map_y);
-      }
-    }
-    // Walking
     else{
-      if( height == 0){
-        if( player_images[characterDir + walking_animation_sequence/ANIMATION_SPEED] != NULL){
-          draw_sprite( temp, player_images[characterDir + walking_animation_sequence/ANIMATION_SPEED], x - tile_map_x, y - tile_map_y);
+      draw_sprite_h_flip( temp, player_images[8 + jumping_animation_sequence/2], x - tile_map_x, y - tile_map_y);
+    }
+  }
+
+  // Falling
+  else if(jumping || canFall){
+    if(characterDir == LEFT){
+      draw_sprite( temp, player_images[13], x - tile_map_x, y - tile_map_y);
+    }
+    else{
+      draw_sprite_h_flip( temp, player_images[13], x - tile_map_x, y - tile_map_y);
+    }
+  }
+
+  // Walking
+  else{
+    if( height == 0){
+      if( idle){
+        if(characterDir == LEFT){
+          draw_sprite( temp, player_images[17], x - tile_map_x, y - tile_map_y);
+        }
+        else{
+          draw_sprite_h_flip( temp, player_images[17], x - tile_map_x, y - tile_map_y);
         }
       }
-      // Crouching
-      else if(characterDir == RIGHT){
-        draw_sprite( temp, player_images[30], x - tile_map_x, y - tile_map_y);
+      else if( player_images[characterDir + walking_animation_sequence/ANIMATION_SPEED] != NULL){
+        if(characterDir == LEFT){
+          draw_sprite( temp, player_images[walking_animation_sequence/ANIMATION_SPEED], x - tile_map_x, y - tile_map_y);
+        }
+        else{
+          draw_sprite_h_flip( temp, player_images[walking_animation_sequence/ANIMATION_SPEED], x - tile_map_x, y - tile_map_y);
+        }
       }
-      else if(characterDir == LEFT){
-        draw_sprite( temp, player_images[31], x - tile_map_x, y - tile_map_y);
-      }
+    }
+    // Crouching
+    else if(characterDir == LEFT){
+      draw_sprite( temp, player_images[15], x - tile_map_x, y - tile_map_y);
+    }
+    else if(characterDir == RIGHT){
+      draw_sprite_h_flip( temp, player_images[15], x - tile_map_x, y - tile_map_y);
     }
   }
-  // Shooting
-  else{
-    if(characterDir == LEFT){
-      if( height == 0){
-        draw_sprite( temp, player_images[24], x - tile_map_x, y - tile_map_y);
-      }
-      else{
-        draw_sprite( temp, player_images[33], x - tile_map_x, y - tile_map_y);
-      }
-    }
-    else{
-      if( height == 0){
-        draw_sprite( temp, player_images[25], x - tile_map_x, y - tile_map_y);
-      }
-      else{
-        draw_sprite( temp, player_images[32], x - tile_map_x, y - tile_map_y);
-      }
-    }
-  }
-  //textprintf_ex(temp,pixelart_2,400,50,makecol(255,255,255),makecol(0,0,0),"Dir:%i  Ani:%i  Full:%i",characterDir, walking_animation_sequence, characterDir + walking_animation_sequence/ANIMATION_SPEED);
+
+  textprintf_ex(temp,pixelart_2,400,50,makecol(255,255,255),makecol(0,0,0),"Dir:%i  Ani:%i  Full:%i",characterDir, walking_animation_sequence, characterDir + walking_animation_sequence/ANIMATION_SPEED);
 
   //Draw bullets
   for(int i = 0; i < bullets.size(); i++){
     bullets.at(i).draw(temp,tile_map_x, tile_map_y);
   }
 
+  // Hand offset (temp?)
+  int hand_offsetX = 28;
+  int hand_offsetY = 58;
+  if( characterDir == RIGHT)
+    hand_offsetX += 6;
+  if( (walking_animation_sequence/ANIMATION_SPEED == 1 || walking_animation_sequence/ANIMATION_SPEED == 3) && !idle)
+    hand_offsetX += 4 * (characterDir/2 - 1);
+  else if( (walking_animation_sequence/ANIMATION_SPEED == 0) && !idle)
+    hand_offsetX += 10 * (characterDir/2 - 1);
+
+
+  // Draw sweps
+  if(characterDir == LEFT){
+    weapons[currentWeapon] -> draw( temp, x - tile_map_x + hand_offsetX, y - tile_map_y + hand_offsetY, false);
+  }
+  else if( characterDir == RIGHT){
+    weapons[currentWeapon] -> draw( temp, x - tile_map_x + hand_offsetX, y - tile_map_y + hand_offsetY, true);
+  }
+
+
   //Draw HUD
   if(!isReadingBlock){
-  textprintf_ex(temp,pixelart_2,224,10,makecol(255,255,255),makecol(0,0,0),"%i",stamina );
-  textprintf_ex(temp,pixelart_2,224,50,makecol(255,255,255),makecol(0,0,0),"%i",health );
-  if(headInLiquid)textprintf_ex(temp,pixelart_2,224,85,makecol(255,255,255),makecol(0,0,0),"%i",oxygen );
+    textprintf_ex(temp,pixelart_2,224,10,makecol(255,255,255),makecol(0,0,0),"%i",stamina );
+    textprintf_ex(temp,pixelart_2,224,50,makecol(255,255,255),makecol(0,0,0),"%i",health );
+    if(headInLiquid)textprintf_ex(temp,pixelart_2,224,85,makecol(255,255,255),makecol(0,0,0),"%i",oxygen );
 
-  if(currentWeapon!=0){
-    if(weapon[currentWeapon].ammunition>9)textprintf_ex(temp,munro_large,480,70,makecol(255,255,255),makecol(0,0,-1),"%i",weapon[currentWeapon].ammunition);
-    if(weapon[currentWeapon].ammunition<10)textprintf_ex(temp,munro_large,480,70,makecol(255,255,255),makecol(0,0,-1),"0%i",weapon[currentWeapon].ammunition);
-    if(weapon[currentWeapon].magazine>9 && weapon[currentWeapon].ammunition<100)textprintf_ex(temp,munro_large,512,70,makecol(255,255,255),makecol(0,0,-1),"/%i",weapon[currentWeapon].magazine);
-    if(weapon[currentWeapon].magazine<10)textprintf_ex(temp,munro_large,512,70,makecol(255,255,255),makecol(0,0,-1),"/0%i",weapon[currentWeapon].magazine);
-    if(weapon[currentWeapon].ammunition>99 && weapon[currentWeapon].ammunition<1000)textprintf_ex(temp,munro_large,530,70,makecol(255,255,255),makecol(0,0,-1),"/%i",weapon[currentWeapon].magazine);
-    if(weapon[currentWeapon].ammunition>999)textprintf_ex(temp,munro_large,550,70,makecol(255,255,255),makecol(0,0,-1),"/%i",weapon[currentWeapon].magazine);
-  }
-  textprintf_ex(temp,pixelart,5,180,makecol(255,255,255),makecol(0,0,0),"Deathcount:%i",deathcount);
-  textprintf_ex(temp,pixelart,5,200,makecol(255,255,255),makecol(0,0,0),"Weapon:%i",currentWeapon );
-  if(isTalkingToNpc){
-    if(npc_ID==0)textprintf_ex(temp,munro_large,20,SCREEN_H-62,makecol(255,255,255),makecol(0,0,0),"Hi! Head on inside, Gerald is waiting. Good luck!");
-    if(npc_ID==1){
-      textprintf_ex(temp,munro_large,20,SCREEN_H-108,makecol(255,255,255),makecol(0,0,0),"Hey man, I've been hearing weird noises from the basement, you should");
-      textprintf_ex(temp,munro_large,20,SCREEN_H-62,makecol(255,255,255),makecol(0,0,0),"go check it out!");
+    if(currentWeapon!=0){
+      textprintf_ex(temp,munro_large,480,70,makecol(255,255,255),makecol(0,0,-1),"%i",weapons[currentWeapon] -> getAmmunition());
+      textprintf_ex(temp,munro_large,512,70,makecol(255,255,255),makecol(0,0,-1),"/%i",weapons[currentWeapon] -> getMagazine());
+      textprintf_ex(temp,munro_large,530,70,makecol(255,255,255),makecol(0,0,-1),"/%i",weapons[currentWeapon] -> getMagazine());
+    }
+
+    textprintf_ex(temp,pixelart,5,180,makecol(255,255,255),makecol(0,0,0),"Deathcount:%i",deathcount);
+    textprintf_ex(temp,pixelart,5,200,makecol(255,255,255),makecol(0,0,0),"Weapon:%i",currentWeapon );
+
+    if(isTalkingToNpc){
+      if(npc_ID==0)
+        textprintf_ex(temp,munro_large,20,SCREEN_H-62,makecol(255,255,255),makecol(0,0,0),"Hi! Head on inside, Gerald is waiting. Good luck!");
+      if(npc_ID==1){
+        textprintf_ex(temp,munro_large,20,SCREEN_H-108,makecol(255,255,255),makecol(0,0,0),"Hey man, I've been hearing weird noises from the basement, you should");
+        textprintf_ex(temp,munro_large,20,SCREEN_H-62,makecol(255,255,255),makecol(0,0,0),"go check it out!");
       }
     }
-  draw_sprite(temp,statusbar, 10, 10);
-  draw_sprite(temp,statusbar, 10, 45);
-  if(headInLiquid)draw_sprite(temp,statusbar, 10, 80);
-  if(currentWeapon==1)draw_sprite(temp,gui_pistol, 280, 10);
-  if(currentWeapon==2)draw_sprite(temp,gui_mp5, 280, 10);
-  if(currentWeapon==3)draw_sprite(temp,gui_ppsh, 280, 10);
-  if(currentWeapon==4)draw_sprite(temp,gui_minigun, 280, 10);
-  if(currentWeapon==5)draw_sprite(temp,gui_remington, 280, 10);
-  rectfill(temp, 14, 14, 14+((stamina*2)), 33, (255,255,(stamina*2)+55));
-  rectfill(temp, 14, 49, 14+(health*2), 68, makecol((health*2)+55,0,0));
-  if(headInLiquid)rectfill(temp, 14, 84, 14+(oxygen*2), 103, makecol((oxygen*2)+55,(oxygen*2)+55,(oxygen*2)+55));
+    draw_sprite(temp,statusbar, 10, 10);
+    draw_sprite(temp,statusbar, 10, 45);
+    if(headInLiquid)draw_sprite(temp,statusbar, 10, 80);
+    if(currentWeapon==1)draw_sprite(temp,gui_pistol, 280, 10);
+    if(currentWeapon==2)draw_sprite(temp,gui_mp5, 280, 10);
+    if(currentWeapon==3)draw_sprite(temp,gui_ppsh, 280, 10);
+    if(currentWeapon==4)draw_sprite(temp,gui_minigun, 280, 10);
+    if(currentWeapon==5)draw_sprite(temp,gui_remington, 280, 10);
+
+    rectfill(temp, 14, 14, 14+(stamina*2), 33, (255,255,(stamina*2)+55));
+    rectfill(temp, 14, 49, 14+(health*2), 68, makecol((health*2)+55,0,0));
+
+    if(headInLiquid)
+      rectfill(temp, 14, 84, 14+(oxygen*2), 103, makecol((oxygen*2)+55,(oxygen*2)+55,(oxygen*2)+55));
   }
 
   if(isReadingBlock){
     if(read_ID==0){
-        draw_sprite(temp,gui_paper, 0, 0);
-        textprintf_ex(temp,munro_large,200,100,makecol(0,0,0),makecol(0,0,-1),"Look! This page has words!");
-
+      draw_sprite(temp,gui_paper, 0, 0);
+      textprintf_ex(temp,munro_large,200,100,makecol(0,0,0),makecol(0,0,-1),"Look! This page has words!");
     }
     if(read_ID==1){
       draw_sprite(temp,gui_statue, 0, 0);
       textprintf_ex(temp,munro_large,400,600,makecol(0,0,0),makecol(0,0,-1),"The statue has been liberated!");
-
-      }
     }
-
-
-
+  }
 
   if(!canFall){
     if(fallheight>15){
-        health -= fallheight*2;
-        if(health>0)play_sample(hurt_fall,255,125,random(750,1250),0);
-        if(health<1)play_sample(death_impact,255,125,1000,0);
+      health -= fallheight*2;
+      if(health>0)
+        play_sample(hurt_fall,255,125,random(750,1250),0);
+      if(health<1)
+        play_sample(death_impact,255,125,1000,0);
     }
     fallheight=0;
   }
-
-
-
 }
- // Spawn
+
+// Spawn
 void player::spawncommand(tileMap *newMap){
   stamina=100;
   for(int i = 0; i < newMap -> mapTiles.size(); i++){
@@ -463,9 +411,6 @@ void player::spawncommand(tileMap *newMap){
 
 //  Movement
 void player::update(tileMap *newMap){
-
-
-
   // Scroll Map
   if(y - newMap -> y < 400 && newMap -> y > 0){
     newMap -> y -= 16;
@@ -512,8 +457,6 @@ void player::update(tileMap *newMap){
   bool canSwimDown = true;
   inLiquid = false;
   headInLiquid = false;
-
-
 
   //Check for collision
   for(int i = 0; i < newMap -> mapTiles.size(); i++){
@@ -577,7 +520,7 @@ void player::update(tileMap *newMap){
           inLiquid = true;
         }
       }
-    if(newMap -> mapTiles.at(i).getAttribute() == liquid){
+      if(newMap -> mapTiles.at(i).getAttribute() == liquid){
         if(collisionAny(x + 16, x + 48, newMap -> mapTiles.at(i).getX(), newMap -> mapTiles.at(i).getX() + newMap -> mapTiles.at(i).getWidth(), y, y + 20, newMap -> mapTiles.at(i).getY(), newMap -> mapTiles.at(i).getY() + newMap -> mapTiles.at(i).getHeight())){
           headInLiquid = true;
         }
@@ -621,10 +564,14 @@ void player::update(tileMap *newMap){
           if(newMap -> mapTiles.at(i).getType() == tile_minigun)weaponAquired=4;
           if(newMap -> mapTiles.at(i).getType() == tile_remington)weaponAquired=5;
           if(weaponAquired!=0){
-           play_sample(weapon_pickup,255,125,1000,0);
-           if(weapon[weaponAquired].magazine==0)weapon[weaponAquired].magazine+=weapon[weaponAquired].magazineSize;
-           else weapon[weaponAquired].ammunition+=weapon[weaponAquired].magazineSize;
-           weapon[weaponAquired].aquired=true;
+            play_sample(weapon_pickup,255,125,1000,0);
+
+           /*if(weapons[weaponAquired].getMagazine() == 0)
+            weapons[weaponAquired].setMagazine( weapons[weaponAquired].getMagazine() + weapons[weaponAquired].getMagazineSize());
+           else
+            weapons[weaponAquired].setAmmunition( weapons[weaponAquired].getAmmunition() + weapons[weaponAquired].getMagazineSize());*/
+
+           weapons[weaponAquired] -> setAquired( true);
            newMap -> mapTiles.at(i).setType(0);
           }
 
@@ -636,10 +583,10 @@ void player::update(tileMap *newMap){
           if(newMap -> mapTiles.at(i).getType() == tile_ammo_remington)ammunitionAquired=5;
 
           if(ammunitionAquired!=0){
-              weapon[ammunitionAquired].ammunition+=weapon[ammunitionAquired].magazineSize;
-              play_sample(ammunition_pickup,255,125,1000,0);
-              newMap -> mapTiles.at(i).setType(0);
-              ammunitionAquired=0;
+            weapons[ammunitionAquired] -> addAmmo( weapons[ammunitionAquired] -> getMagazineSize());
+            play_sample(ammunition_pickup,255,125,1000,0);
+            newMap -> mapTiles.at(i).setType(0);
+            ammunitionAquired=0;
           }
 
           if(newMap -> mapTiles.at(i).getType() == tile_medpack){
@@ -652,27 +599,29 @@ void player::update(tileMap *newMap){
     }
 
     //NPC
-
     if(key[KEY_E] || joy[0].button[2].b){
-
-     // particle newParticle( x + random( 0, 40), y + random( 0, 40), color, -2, 2, -2, 2, CIRCLE, 1);
+      // particle newParticle( x + random( 0, 40), y + random( 0, 40), color, -2, 2, -2, 2, CIRCLE, 1);
       if(collisionAny(x + 18, x + 46, newMap -> mapTiles.at(i).getX(), newMap -> mapTiles.at(i).getX() + newMap -> mapTiles.at(i).getWidth(), y, y + 144, newMap -> mapTiles.at(i).getY(), newMap -> mapTiles.at(i).getY() + newMap -> mapTiles.at(i).getHeight())){
         if(newMap -> mapTiles.at(i).getAttribute() == npc){
-            npc_ID = newMap -> mapTiles.at(i).getType()-300;
-            isTalkingToNpc=true;
-            }
+          npc_ID = newMap -> mapTiles.at(i).getType()-300;
+          isTalkingToNpc=true;
+        }
       }
-    }else isTalkingToNpc=false;
+    }
+    else
+      isTalkingToNpc=false;
 
-     //Reading blocks
-     if(key[KEY_E] || joy[0].button[2].b){
+    //Reading blocks
+    if(key[KEY_E] || joy[0].button[2].b){
       if(collisionAny(x + 18, x + 46, newMap -> mapTiles.at(i).getX(), newMap -> mapTiles.at(i).getX() + newMap -> mapTiles.at(i).getWidth(), y, y + 144, newMap -> mapTiles.at(i).getY(), newMap -> mapTiles.at(i).getY() + newMap -> mapTiles.at(i).getHeight())){
         if(newMap -> mapTiles.at(i).getAttribute() == readable){
             read_ID = newMap -> mapTiles.at(i).getType()-400;
             isReadingBlock=true;
         }
       }
-    }else isReadingBlock=false;
+    }
+    else
+      isReadingBlock=false;
 
 
 
@@ -710,48 +659,47 @@ void player::update(tileMap *newMap){
         }
       }
     }
-      // Level Switching
-      if(key[KEY_Q] || joy[0].button[3].b){
-        if(collisionAny(x + 18, x + 46, newMap -> mapTiles.at(i).getX(), newMap -> mapTiles.at(i).getX() + newMap -> mapTiles.at(i).getWidth(), y, y + 144, newMap -> mapTiles.at(i).getY(), newMap -> mapTiles.at(i).getY() + newMap -> mapTiles.at(i).getHeight())){
-          if(newMap -> mapTiles.at(i).getAttribute() == interactive){
-            if(newMap -> mapTiles.at(i).getType() == tile_elevator_33 || newMap -> mapTiles.at(i).getType() == tile_brick_door_2 || newMap -> mapTiles.at(i).getType() == tile_brown_door_2){
-                finishLevel = true;
-                if(level==1)newMap -> load("data/levels/level_02");
-                if(level==2)newMap -> load("data/levels/level_03");
-                if(level==3)newMap -> load("data/levels/level_04");
-                if(level==4)newMap -> load("data/levels/level_05");
-                if(level==5)newMap -> load("data/levels/level_06");
-                if(level==6)newMap -> load("data/levels/level_07");
-                if(level==7)newMap -> load("data/levels/level_08");
-                if(level==8)newMap -> load("data/levels/level_09");
-                if(level==9)newMap -> load("data/levels/level_10");
-                if(level==10)newMap -> load("data/levels/level_11");
-                level++;
+    // Level Switching
+    if(key[KEY_Q] || joy[0].button[3].b){
+      if(collisionAny(x + 18, x + 46, newMap -> mapTiles.at(i).getX(), newMap -> mapTiles.at(i).getX() + newMap -> mapTiles.at(i).getWidth(), y, y + 144, newMap -> mapTiles.at(i).getY(), newMap -> mapTiles.at(i).getY() + newMap -> mapTiles.at(i).getHeight())){
+        if(newMap -> mapTiles.at(i).getAttribute() == interactive){
+          if(newMap -> mapTiles.at(i).getType() == tile_elevator_33 || newMap -> mapTiles.at(i).getType() == tile_brick_door_2 || newMap -> mapTiles.at(i).getType() == tile_brown_door_2){
+            finishLevel = true;
+            if(level==1)newMap -> load("data/levels/level_02");
+            if(level==2)newMap -> load("data/levels/level_03");
+            if(level==3)newMap -> load("data/levels/level_04");
+            if(level==4)newMap -> load("data/levels/level_05");
+            if(level==5)newMap -> load("data/levels/level_06");
+            if(level==6)newMap -> load("data/levels/level_07");
+            if(level==7)newMap -> load("data/levels/level_08");
+            if(level==8)newMap -> load("data/levels/level_09");
+            if(level==9)newMap -> load("data/levels/level_10");
+            if(level==10)newMap -> load("data/levels/level_11");
+            level++;
 
-                spawncommand(newMap);
+            spawncommand(newMap);
           }
         }
       }
     }
-      if(collisionAny(x + 18, x + 46, newMap -> mapTiles.at(i).getX(), newMap -> mapTiles.at(i).getX() + newMap -> mapTiles.at(i).getWidth(), y, y + 144, newMap -> mapTiles.at(i).getY(), newMap -> mapTiles.at(i).getY() + newMap -> mapTiles.at(i).getHeight())){
-          if(newMap -> mapTiles.at(i).getAttribute() == levelend){
-                finishLevel = true;
-                if(level==1)newMap -> load("data/levels/level_02");
-                if(level==2)newMap -> load("data/levels/level_03");
-                if(level==3)newMap -> load("data/levels/level_04");
-                if(level==4)newMap -> load("data/levels/level_05");
-                if(level==5)newMap -> load("data/levels/level_06");
-                if(level==6)newMap -> load("data/levels/level_07");
-                if(level==7)newMap -> load("data/levels/level_08");
-                if(level==8)newMap -> load("data/levels/level_09");
-                if(level==9)newMap -> load("data/levels/level_10");
-                if(level==10)newMap -> load("data/levels/level_11");
-                level++;
-
-                spawncommand(newMap);
-
+    if(collisionAny(x + 18, x + 46, newMap -> mapTiles.at(i).getX(), newMap -> mapTiles.at(i).getX() + newMap -> mapTiles.at(i).getWidth(), y, y + 144, newMap -> mapTiles.at(i).getY(), newMap -> mapTiles.at(i).getY() + newMap -> mapTiles.at(i).getHeight())){
+      if(newMap -> mapTiles.at(i).getAttribute() == levelend){
+        finishLevel = true;
+        if(level==1)newMap -> load("data/levels/level_02");
+        if(level==2)newMap -> load("data/levels/level_03");
+        if(level==3)newMap -> load("data/levels/level_04");
+        if(level==4)newMap -> load("data/levels/level_05");
+        if(level==5)newMap -> load("data/levels/level_06");
+        if(level==6)newMap -> load("data/levels/level_07");
+        if(level==7)newMap -> load("data/levels/level_08");
+        if(level==8)newMap -> load("data/levels/level_09");
+        if(level==9)newMap -> load("data/levels/level_10");
+        if(level==10)newMap -> load("data/levels/level_11");
+        level++;
+        spawncommand(newMap);
       }
     }
+
     //Frame moving up
     if(switch_direction){
       if(switch_frame>3)if(newMap -> mapTiles.at(i).getType() == tile_generator_2){newMap -> mapTiles.at(i).setType(43); switch_frame=0;}
@@ -862,19 +810,28 @@ void player::update(tileMap *newMap){
   //Move right
   if(key[KEY_D] || joy[0].stick[0].axis[0].d2 || key[KEY_RIGHT]){
     if(!key[KEY_A] && jumping_animation_done && x < newMap -> width*64){
-        if(inLiquid)play_sample(water_walk,255,125,1000,0);
-        characterDir = RIGHT;
-        if(canMoveRight){
-            if(isSprinting && stamina>0 && !isCrouching){x += 16; stamina--;}
-        else if(isCrouching && canCrouchRight)x += 2;
-        else if(!isCrouching)x +=8;
-        walking_animation_sequence++;
-        if(walking_animation_sequence == 1*ANIMATION_SPEED && !canFall && !jumping){
-            if(!isCrouching){
-            if(!inLiquid){
-                play_sample(walk_stone,255,125,1000,0);
+      if(inLiquid)
+        play_sample(water_walk,255,125,1000,0);
 
-            }else play_sample(water_walk,255,125,random(750,1250),0);
+      characterDir = RIGHT;
+
+      if(canMoveRight){
+        if(isSprinting && stamina>0 && !isCrouching){
+          x += 16;
+          stamina--;
+        }
+        else if(isCrouching && canCrouchRight)
+          x += 2;
+        else if(!isCrouching)
+          x += 8;
+        walking_animation_sequence++;
+
+        if(walking_animation_sequence == ANIMATION_SPEED && !canFall && !jumping){
+          if(!isCrouching){
+            if(!inLiquid)
+              play_sample(walk_stone,255,125,1000,0);
+            else
+              play_sample(water_walk,255,125,random(750,1250),0);
           }
         }
       }
@@ -883,20 +840,29 @@ void player::update(tileMap *newMap){
 
   //Move left
   if(key[KEY_A] || joy[0].stick[0].axis[0].d1 || key[KEY_LEFT]){
-    if(!key[KEY_D] && jumping_animation_done && x > 0 || joy[0].stick[0].axis[0].d2 && jumping_animation_done && x > 0  ){
+    if((!key[KEY_D] || joy[0].stick[0].axis[0].d2) && jumping_animation_done && x > 0 ){
+      if(inLiquid)
+        play_sample(water_walk,255,125,1000,0);
 
-        characterDir = LEFT;
-        if(canMoveLeft){
-            if(isSprinting && stamina>0 && !isCrouching){x -= 16; stamina--;}
-        else if(isCrouching && canCrouchLeft)x -= 2;
-        else if(!isCrouching)x -=8;
+      characterDir = LEFT;
+
+      if(canMoveLeft){
+        if(isSprinting && stamina>0 && !isCrouching){
+          x -= 16;
+          stamina--;
+        }
+        else if(isCrouching && canCrouchLeft)
+          x -= 2;
+        else if(!isCrouching)
+          x -= 8;
         walking_animation_sequence++;
-        if(walking_animation_sequence == 1*ANIMATION_SPEED && !canFall && !jumping){
-            if(!isCrouching){
-            if(!inLiquid){
-                play_sample(walk_stone,255,125,1000,0);
 
-            }else play_sample(water_walk,255,125,random(750,1250),0);
+        if(walking_animation_sequence == ANIMATION_SPEED && !canFall && !jumping){
+          if(!isCrouching){
+            if(!inLiquid)
+              play_sample(walk_stone,255,125,1000,0);
+            else
+              play_sample(water_walk,255,125,random(750,1250),0);
           }
         }
       }
@@ -904,6 +870,13 @@ void player::update(tileMap *newMap){
   }
   canFall = true;
   bool smoothFall = false;
+
+  if( !key[KEY_A] && !key[KEY_D] && !key[KEY_LEFT]  && !key[KEY_RIGHT]){
+    idle = true;
+  }
+  else{
+    idle = false;
+  }
 
   //Falling (calculated seperately to ensure collision accurate)
   for(int i = 0; i < newMap -> mapTiles.size(); i++){
@@ -929,7 +902,8 @@ void player::update(tileMap *newMap){
     staminaLoop=0;
   }
   staminaLoop++;
-  if(isCrouching)stamina++;
+  if(isCrouching)
+    stamina++;
 
   if(stamina<0)
     stamina=0;
@@ -947,16 +921,22 @@ void player::update(tileMap *newMap){
       fallheight++;
     }
   }
-  //Sink
-  if(inLiquid && canSwimDown)y+=2;
 
-  if(key[KEY_LSHIFT] || joy[0].button[8].b){
+  //Sink
+  if(inLiquid && canSwimDown)
+    y+=2;
+
+  // Sprint toggle
+  if(key[KEY_LSHIFT] || joy[0].button[8].b)
     isSprinting=true;
-  }else isSprinting=false;
+  else
+    isSprinting=false;
+
   //Smooth falling
   if(smoothFall){
     y += 1;
   }
+
   //Oxygen
   if(headInLiquid && oxygen>0){
     oxygenHarm++;
@@ -976,15 +956,17 @@ void player::update(tileMap *newMap){
   if(!canFall){
     if(fallheight>10 && !inLiquid){
       health -= fallheight*2;
-
       if(health>0)
         play_sample(hurt_fall,255,125,random(750,1250),0);
       if(health<1)
         play_sample(death_impact,255,125,1000,0);
     }
-    if(fallheight>5 && inLiquid)if(inLiquid)play_sample(water_splash,255,125,1000,0);
+    if(fallheight>5 && inLiquid)
+      play_sample(water_splash,255,125,1000,0);
+
     fallheight=0;
   }
+
   //Death
   if(health<1){
     dead = true;
@@ -1003,15 +985,16 @@ void player::update(tileMap *newMap){
   //Snap to cover
   if(key[KEY_Z]){
     moving_to_cover = true;
-    if(characterDir = RIGHT){
+    if(characterDir == RIGHT){
       if(canCrouchRight && canMoveRight && moving_to_cover){
-        x+=4;
+        x += 4;
       }
       else if(!canCrouchRight || !canMoveRight){
-        moving_to_cover=false;
+        moving_to_cover = false;
       }
     }
   }
+
   //Jumping
   if(jumping && canJumpUp && !inLiquid){
     if(canFall || jump_height > 0 ){
@@ -1039,26 +1022,29 @@ void player::update(tileMap *newMap){
   //Crouch
   if(isCrouching){
     height = 64;
-  }else if( canStopCrouch){
+  }
+  else if( canStopCrouch){
     height=0;
   }
 
-  if(key[KEY_LCONTROL] || joy[0].button[4].b){
+  // Crouch toggle
+  if(key[KEY_LCONTROL] || joy[0].button[4].b)
     isCrouching=true;
-  }else if(canStopCrouch) isCrouching=false;
+  else if(canStopCrouch)
+    isCrouching=false;
 
   //Jump
   if(joy[0].button[0].b || key[KEY_SPACE]){
     if(!isCrouching){
-       if(inLiquid){
-           y -= 8;
-        }
-        if(!canFall && canJump && !jumping && jumping_animation_done){
+      if(inLiquid){
+         y -= 8;
+      }
+      if(!canFall && canJump && !jumping && jumping_animation_done){
         yVelocity = 16;
         play_sample(jump,255,125,1000,0);
         jumping_animation_done = false;
         jump_height = 0;
-       }
+      }
     }
   }
 
@@ -1082,6 +1068,7 @@ void player::update(tileMap *newMap){
       jumping = true;
     }
   }
+
   // Reset animation sequence
   if(walking_animation_sequence == ANIMATION_SPEED * 4){
     walking_animation_sequence = 0;
@@ -1092,35 +1079,41 @@ void player::update(tileMap *newMap){
     walking_animation_sequence = 0;
     stop_sample(walk_stone);
   }
- // if(collisionAny(badguy.getX(),badguy.getX()+32,x,x+32,badguy.getY(),badguy.getY()+128,y,y+128)){
-  //  health=0;
 
   // Not shooting anymore
   if(shooting){
     shooting_animation_sequence++;
-    if( shooting_animation_sequence > weapon[currentWeapon].rateOfFire){
+    if( shooting_animation_sequence > weapons[currentWeapon] -> getRateOfFire()){
       shooting = false;
       shooting_animation_sequence = 0;
     }
   }
+
   //Change currentWeapon
-  if(key[KEY_TILDE])currentWeapon=0;
-  if(key[KEY_1] && weapon[1].aquired)currentWeapon=1;
-  if(key[KEY_2] && weapon[2].aquired)currentWeapon=2;
-  if(key[KEY_3] && weapon[3].aquired)currentWeapon=3;
-  if(key[KEY_4] && weapon[4].aquired)currentWeapon=4;
-  if(key[KEY_5] && weapon[5].aquired)currentWeapon=5;
-  if(key[KEY_6] && weapon[6].aquired)currentWeapon=6;
-  if(key[KEY_7] && weapon[7].aquired)currentWeapon=7;
-  if(key[KEY_8] && weapon[8].aquired)currentWeapon=8;
-  if(key[KEY_9] && weapon[9].aquired)currentWeapon=9;
+  if(key[KEY_TILDE])
+    currentWeapon=0;
+  if(key[KEY_1] && weapons[1] -> getAquired())
+    currentWeapon=1;
+  if(key[KEY_2] && weapons[2] -> getAquired())
+    currentWeapon=2;
+  if(key[KEY_3] && weapons[3] -> getAquired())
+    currentWeapon=3;
+  if(key[KEY_4] && weapons[4] -> getAquired())
+    currentWeapon=4;
+  if(key[KEY_5] && weapons[5] -> getAquired())
+    currentWeapon=5;
+  if(key[KEY_6] && weapons[6] -> getAquired())
+    currentWeapon=6;
+  if(key[KEY_7] && weapons[7] -> getAquired())
+    currentWeapon=7;
+  if(key[KEY_8] && weapons[8] -> getAquired())
+    currentWeapon=8;
+  if(key[KEY_9] && weapons[9] -> getAquired())
+    currentWeapon=9;
 
-  if(joy[0].stick[1].axis[4].d1){
-
-  }
   //Harm player
-  if(key[KEY_H])health--;
-
+  if(key[KEY_H])
+    health--;
 
   //Spawns
   if(key[KEY_F]){
@@ -1134,74 +1127,66 @@ void player::update(tileMap *newMap){
   }
 
   //Shoot currentWeapon
-  if(joy[0].stick[0].axis[2].d1 && !shooting && currentWeapon!=0 || !shooting && key[KEY_ENTER]&& currentWeapon!=0){
-    if(weapon[currentWeapon].rateOfFire==-1 && !triggerReleased){
-        canShoot=false;
-    }else canShoot=true;
+  if(( joy[0].stick[0].axis[2].d1 || key[KEY_ENTER]) && !shooting && currentWeapon!=0){
+    if(weapons[currentWeapon] -> getRateOfFire() == -1 && !triggerReleased)
+      canShoot=false;
+    else
+      canShoot=true;
+
     triggerReleased=false;
-    if(weapon[currentWeapon].magazine > 0 && canShoot){
-      int bulletSpeed;
-      int bulletDirection = 1;
-      int bulletHeight = 63;
-      bulletSpeed=weapon[currentWeapon].speed;
-      if(height != 0)bulletHeight = 102;
-      if(characterDir == LEFT){
-        bulletDirection = -1;
-      }
-      if(weapon[currentWeapon].bulletsFired==1){
-        projectile newBullet( 0, x + 30, y + bulletHeight, bulletSpeed * bulletDirection);
-        bullets.push_back(newBullet);
-      }
-      else if(weapon[currentWeapon].bulletsFired!=1){
-        if(height==0){
-          for(int i = 0; i < weapon[currentWeapon].bulletsFired;  i++){
-            projectile newBullet( 0, x + 30, y + bulletHeight-(i*10), bulletSpeed * bulletDirection);
-            bullets.push_back(newBullet);
+
+    if( canShoot){
+      if( weapons[currentWeapon] -> getMagazine() > 0 && canShoot){
+        int bulletSpeed;
+        int bulletDirection = 1;
+        int bulletHeight = 63;
+        bulletSpeed = weapons[currentWeapon] ->getSpeed();
+
+        if( height != 0)
+          bulletHeight = 102;
+        if( characterDir == LEFT){
+          bulletDirection = -1;
+        }
+
+        if( weapons[currentWeapon] -> getBulletsFired() == 1){
+          projectile newBullet( 0, x + 30, y + bulletHeight, bulletSpeed * bulletDirection);
+          bullets.push_back(newBullet);
+        }
+        else if( weapons[currentWeapon] -> getBulletsFired() != 1){
+          if( height==0){
+            for( int i = 0; i < weapons[currentWeapon] -> getBulletsFired();  i++){
+              projectile newBullet( 0, x + 30, y + bulletHeight-(i*10), bulletSpeed * bulletDirection);
+              bullets.push_back(newBullet);
+            }
           }
         }
+        weapons[currentWeapon] -> setMagazine( weapons[currentWeapon] -> getMagazine() - 1);
       }
-      weapon[currentWeapon].magazine--;
+      else
+        play_sample(dryfire,255,125,1000,0);
     }
-    else if(canShoot) play_sample(dryfire,255,125,1000,0);
-
     shooting = true;
   }
-  if(!joy[0].stick[0].axis[2].d1 && !key[KEY_ENTER]){
+  if( !joy[0].stick[0].axis[2].d1 && !key[KEY_ENTER]){
     triggerReleased=true;
   }
-  if(weapon[currentWeapon].magazine==0)reloadTicks++;
 
-  if(reloadTicks>=weapon[currentWeapon].reloadSpeed){
-    reloadTicks=0;
-    if(weapon[currentWeapon].ammunition >= weapon[currentWeapon].magazineSize){
-      weapon[currentWeapon].ammunition -= weapon[currentWeapon].magazineSize;
-      weapon[currentWeapon].magazine = weapon[currentWeapon].magazineSize;
-    }
-    else{
-      weapon[currentWeapon].ammunition = weapon[currentWeapon].magazine;
-      weapon[currentWeapon].ammunition = 0;
-    }
-  }
+  // Update sweps
+  weapons[currentWeapon] -> logic();
 
   // Update bullets
-  for(int i = 0; i < bullets.size(); i++){
+  for( int i = 0; i < bullets.size(); i++){
     bullets.at(i).update();
-    if((bullets.at(i).getContact(newMap) && bullets.at(i).getContactFrameCounter() == 10) || bullets.at(i).getContact()){
+    if(( bullets.at(i).getContact(newMap) && bullets.at(i).getContactFrameCounter() == 10) || bullets.at(i).getContact()){
       bullets.erase(bullets.begin() + i);
     }
   }
-    //ESC key handler
-    //Yes Allan, its in the player class. Deal with it.
-
-    if(key[KEY_ESC]){
-        exit_menu_open=true;
-    }
 }
 
 player::~player(){
   bullets.clear();
 
-  for(int i = 0; i < 26; i++){
+  /*for(int i = 0; i < 26; i++){
 		if(player_images[i]){
 			destroy_bitmap(player_images[i]);
 		}
@@ -1223,5 +1208,5 @@ player::~player(){
   destroy_sample( alarm);
   destroy_sample( elevator);
   destroy_sample( wood_smash);
-  destroy_sample( pistol_boxget);
+  destroy_sample( pistol_boxget);*/
 }

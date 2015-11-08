@@ -19,8 +19,6 @@
 					<Add option="-lalpng" />
 					<Add option="-lalleg" />
 					<Add option="-lfmod" />
-					<Add option="-static-libgcc" />
-					<Add option="-static-libstdc++" />
 				</Linker>
 			</Target>
 		</Build>
@@ -45,7 +43,8 @@
 		<Unit filename="include/tile.h" />
 		<Unit filename="include/tileMap.h" />
 		<Unit filename="include/tools.h" />
-		<Unit filename="resources.rc">
+		<Unit filename="include/weapon.h" />
+		<Unit filename="res/resources.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="src/Editor.cpp" />
@@ -64,7 +63,7 @@
 		<Unit filename="src/tile.cpp" />
 		<Unit filename="src/tileMap.cpp" />
 		<Unit filename="src/tools.cpp" />
-		<Unit filename="version.h" />
+		<Unit filename="src/weapon.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
@@ -81,7 +80,7 @@
 			</DoxyBlocks>
 			<AutoVersioning>
 				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
-				<Settings autoincrement="1" date_declarations="1" update_manifest="0" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
+				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="0" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
 				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
 				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
 			</AutoVersioning>

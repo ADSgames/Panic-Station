@@ -1,5 +1,5 @@
-#ifndef ENEMY_H
-#define ENEMY_H
+#ifndef PERSON_H
+#define PERSON_H
 
 #include <allegro.h>
 #include <alpng.h>
@@ -10,12 +10,12 @@
 #include "projectile.h"
 
 #include "tileMap.h"
-#include "player.h"
 
 #define ANIMATION_SPEED 5
 #define JUMPING_HEIGHT 192
 
-class enemy{
+class person
+{
   public:
     enemy( int newX, int newY, int newType);
 
@@ -33,7 +33,7 @@ class enemy{
 
     ~enemy();
 
-  private:
+  protected:
     int x;
     int y;
 
@@ -71,15 +71,7 @@ class enemy{
     vector<projectile> bullets;
 
     // 0-3 left, 4-7 right, 8 jump left 9 jump right 10 dead
-    BITMAP* enemy_images[11];
-
-    //Sounds
-    SAMPLE* walk1;
-    SAMPLE* walk2;
-    SAMPLE* jump;
-    SAMPLE* die;
-    SAMPLE* getItem;
-    SAMPLE* getBonus;
+    BITMAP* images[36];
 };
 
-#endif
+#endif // PERSON_H

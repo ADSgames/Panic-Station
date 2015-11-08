@@ -7,11 +7,11 @@
 #include "globals.h"
 #include "tools.h"
 #include "projectile.h"
+#include "weapon.h"
 
 #include "tileMap.h"
-#include "enemy.h"
 
-#define ANIMATION_SPEED 5
+#define ANIMATION_SPEED 8
 #define JUMPING_HEIGHT 192
 
 class player{
@@ -21,17 +21,7 @@ class player{
 
     char path[480];
 
-    struct weapons{
-        int speed;
-        int ammunition;
-        int magazine;
-        int magazineSize;
-        int reloadSpeed;
-        int rateOfFire;
-        int bulletsFired;
-        int damage;
-        bool aquired;
-    }weapon[10];
+    weapon *weapons[10];
 
     int currentWeapon;
 
@@ -62,9 +52,6 @@ class player{
 
     bool triggerReleased;
     bool canShoot;
-
-    int reloadTicks;
-
 
     int weaponScrollLoop;
 
@@ -117,6 +104,8 @@ class player{
     bool inLiquid;
     bool headInLiquid;
 
+    bool idle;
+
     int shooting_animation_sequence;
     int walking_animation_sequence;
     int jumping_animation_sequence;
@@ -126,8 +115,8 @@ class player{
 
     vector<projectile> bullets;
 
-    // 0-3 left, 4-7 right, 8-11 up 12-17 jump left 18-23 jump right <-- This isn't accurate
-    BITMAP* player_images[36];
+    // 0-3 walk, 4-7 up 8-13 jump, 15-16 crouch
+    BITMAP* player_images[18];
 
     BITMAP* statusbar;
     BITMAP* gui_paper;
@@ -164,9 +153,6 @@ class player{
     SAMPLE* water_walk;
     SAMPLE* weapon_pickup;
     SAMPLE* ammunition_pickup;
-
-    //Esc key handler variables
-    bool exit_menu_open;
 };
 
 #endif

@@ -116,14 +116,14 @@ void Game::draw( bool toScreen)
   // Draw tiles
   tile_map -> draw_map(buffer);
 
-  // Draw character
-
-
   // Draw enemies
   for(int i = 0; i < badGuy.size(); i++){
     badGuy.at(i) -> draw(buffer, tile_map -> x, tile_map -> y);
   }
-    character.draw(buffer, tile_map -> x, tile_map -> y);
+
+  // Draw character
+  character.draw(buffer, tile_map -> x, tile_map -> y);
+
   // Draw buffer
   if( toScreen){
     stretch_sprite( screen, buffer, 0, 0, SCREEN_W, SCREEN_H);
