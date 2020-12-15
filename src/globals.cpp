@@ -16,6 +16,6 @@ bool updatesEnabled = true;
 // Resdiv
 int resDiv;
 
-//State variables
+// State variables
 int stateID;
 int nextState;

@@ -1,11 +1,9 @@
 #include "person.h"
 
-person::person()
-{
-  //ctor
+person::person() {
+  // ctor
 }
 
-person::~person()
-{
-  //dtor
+person::~person() {
+  // dtor
 }

@@ -6,9 +6,9 @@
 #include <vector>
 
 #include "globals.h"
+#include "player.h"
 #include "projectile.h"
 #include "tools.h"
-#include "player.h"
 
 #include "tileMap.h"
 

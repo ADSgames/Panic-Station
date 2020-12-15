@@ -9,6 +9,9 @@ enemy::enemy(int newX, int newY, int newType) {
   walking_counter = 0;
 
   walking_animation_sequence = 0;
+  jumping_animation_sequence = 0;
+  yVelocity = 0;
+  jump_height = 0;
   jumpChance = 0;
   maxSteps = 0;
   minSteps = 0;
@@ -178,7 +181,7 @@ void enemy::draw(BITMAP* temp, int tile_map_x, int tile_map_y) {
       }
 
       // Draw bullets
-      for (int i = 0; i < bullets.size(); i++) {
+      for (unsigned int i = 0; i < bullets.size(); i++) {
         bullets.at(i).draw(temp, tile_map_x, tile_map_y);
       }
     } else {
@@ -219,7 +222,7 @@ void enemy::update(tileMap* newMap, player* newPlayer) {
       bool inLiquid = false;
 
       // Check for collision
-      for (int i = 0; i < newMap->mapTiles.size(); i++) {
+      for (unsigned int i = 0; i < newMap->mapTiles.size(); i++) {
         // Only compare to near by tiles to save CPU power!
         if (collisionAny(x - 64, x + 128, newMap->mapTiles.at(i).getX(),
                          newMap->mapTiles.at(i).getX() +
@@ -340,7 +343,7 @@ void enemy::update(tileMap* newMap, player* newPlayer) {
       }
 
       // Check for points and dangers
-      for (int i = 0; i < newMap->mapTiles.size(); i++) {
+      for (unsigned int i = 0; i < newMap->mapTiles.size(); i++) {
         if (collisionAny(
                 x - width * 2, x + width * 2, newMap->mapTiles.at(i).getX(),
                 newMap->mapTiles.at(i).getX() +
@@ -363,7 +366,7 @@ void enemy::update(tileMap* newMap, player* newPlayer) {
       }
 
       // Check collision with bullets
-      for (int i = 0; i < newPlayer->getBullets()->size(); i++) {
+      for (unsigned int i = 0; i < newPlayer->getBullets()->size(); i++) {
         if (collisionAny(x, x + width, newPlayer->getBullets()->at(i).getX(),
                          newPlayer->getBullets()->at(i).getX() + 64, y,
                          y + height, newPlayer->getBullets()->at(i).getY(),
@@ -457,7 +460,7 @@ void enemy::update(tileMap* newMap, player* newPlayer) {
       }
 
       // Update bullets
-      for (int i = 0; i < bullets.size(); i++) {
+      for (unsigned int i = 0; i < bullets.size(); i++) {
         bullets.at(i).update();
         if (bullets.at(i).getContact(newMap) &&
             bullets.at(i).getContactFrameCounter() == 10) {
@@ -471,7 +474,7 @@ void enemy::update(tileMap* newMap, player* newPlayer) {
     canFall = true;
     bool smoothFall = false;
     // Falling (calculated separately to ensure collision accurate)
-    for (int i = 0; i < newMap->mapTiles.size(); i++) {
+    for (unsigned int i = 0; i < newMap->mapTiles.size(); i++) {
       if (collisionAny(
               x - width * 2, x + width * 2, newMap->mapTiles.at(i).getX(),
               newMap->mapTiles.at(i).getX() + newMap->mapTiles.at(i).getWidth(),

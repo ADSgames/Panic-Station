@@ -7,43 +7,46 @@
 #include "globals.h"
 #include "tools.h"
 
-class tile{
-  public:
-    tile(int newType);
-    ~tile();
+class tile {
+ public:
+  tile(int newType);
+  ~tile();
 
-    int getX();
-    int getY();
+  int getX();
+  int getY();
 
-    int getWidth();
-    int getHeight();
+  int getWidth();
+  int getHeight();
 
-    void setX(int newX);
-    void setY(int newY);
+  void setX(int newX);
+  void setY(int newY);
 
-    int getType();
-    int getAttribute();
+  int getType();
+  int getAttribute();
 
-    BITMAP* getImage();
+  BITMAP* getImage();
 
-    void setType(int newType);
+  void setType(int newType);
 
-    void setImages(BITMAP* image1);
-    void setImagesAnimated(BITMAP* image1, BITMAP* image2, BITMAP* image3, BITMAP* image4);
+  void setImages(BITMAP* image1);
+  void setImagesAnimated(BITMAP* image1,
+                         BITMAP* image2,
+                         BITMAP* image3,
+                         BITMAP* image4);
 
-    void draw_tile(BITMAP* temp, int xOffset, int yOffset, int frame);
+  void draw_tile(BITMAP* temp, int xOffset, int yOffset, int frame);
 
-  private:
-    int x;
-    int y;
-    int width;
-    int height;
-    int type;
-    int attribute;
+ private:
+  int x;
+  int y;
+  int width;
+  int height;
+  int type;
+  int attribute;
 
-    bool animated;
+  bool animated;
 
-    BITMAP* images[4];
+  BITMAP* images[4];
 };
 
 #endif

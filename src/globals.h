@@ -1,11 +1,11 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-//All libaries
+// All libaries
 #include <allegro.h>
 
-//All defined presets put here
-//tile Attributes
+// All defined presets put here
+// tile Attributes
 #define gas 0
 #define solid 1
 #define liquid 2
@@ -19,18 +19,18 @@
 #define levelend 10
 #define readable 11
 
-//Game screens
+// Game screens
 #define INGAME 1
 #define SAVE 5
 #define OPEN 6
 
-//Character directions
+// Character directions
 // 0-3 left, 4-7 right, 8-11 up
 #define LEFT 0
 #define RIGHT 4
 #define UP 8
 
-//Tiles (0-198)
+// Tiles (0-198)
 #define tile_air 0
 #define tile_medpack 1
 #define tile_sky_1 2
@@ -194,29 +194,26 @@
 #define tile_ammo_ppsh 139
 #define tile_ammo_minigun 140
 
+// Where backround images were(Removed for number allocation)
 
-
-
-//Where backround images were(Removed for number allocation)
-
-//NPC's (300-400)
+// NPC's (300-400)
 #define tile_npc_allan 300
 #define tile_npc_gerald 301
 
-//Readable (400-500)
+// Readable (400-500)
 #define tile_readable_paper 400
 #define tile_readable_statue 401
 
-//Spawners (199+)
+// Spawners (199+)
 #define tile_spawn_player 199
 #define tile_spawn_vorticon 200
 #define tile_spawn_robot 201
 #define tile_spawn_mutant 202
 
-//Level end block
+// Level end block
 #define tile_teleporter 299
 
-//Enemies
+// Enemies
 #define enemy_sentry 1
 #define enemy_mutant 2
 
@@ -228,18 +225,17 @@ extern BITMAP* tileSprites[500][4];
 extern BITMAP* projectileSprites[10][3];
 
 // Set next state
-void set_next_state( int newState );
+void set_next_state(int newState);
 
-//Game states
-enum GameStates
-{
-    STATE_NULL,
-    STATE_INIT,
-    STATE_INTRO,
-    STATE_MENU,
-    STATE_EDIT,
-    STATE_GAME,
-    STATE_EXIT,
+// Game states
+enum GameStates {
+  STATE_NULL,
+  STATE_INIT,
+  STATE_INTRO,
+  STATE_MENU,
+  STATE_EDIT,
+  STATE_GAME,
+  STATE_EXIT,
 };
 
 // Frames
@@ -248,11 +244,10 @@ extern volatile int game_time;
 extern volatile int ticks;
 extern bool updatesEnabled;
 
-
 // Resdiv
 extern int resDiv;
 
-//State variables
+// State variables
 extern int stateID;
 extern int nextState;
 

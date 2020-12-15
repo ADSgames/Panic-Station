@@ -8,38 +8,38 @@
 #include <string>
 #include <vector>
 
-#include "tileMap.h"
-#include "tile.h"
 #include "globals.h"
+#include "tile.h"
+#include "tileMap.h"
 #include "tools.h"
 
-class Editor : public GameState
-{
-  private:
-    int selectedTileType;
-    int layer;
+class Editor : public GameState {
+ private:
+  int selectedTileType;
+  int layer;
 
-    bool saving;
-    bool opening;
+  bool saving;
+  bool opening;
 
-    BITMAP* buffer;
+  BITMAP* buffer;
 
-    tileMap *tile_map;
-    tile *exampleTile;
+  tileMap* tile_map;
+  tile* exampleTile;
 
-    //Text input
-    string  edittext;
-    string::iterator iter;
+  // Text input
+  string edittext;
+  string::iterator iter;
 
-    void init();
-    void save();
-    void open();
-  protected:
-  public:
-    Editor();
-    void update();
-    void draw( bool toScreen);
-    ~Editor();
+  void init();
+  void save();
+  void open();
+
+ protected:
+ public:
+  Editor();
+  void update();
+  void draw(bool toScreen);
+  ~Editor();
 };
 
-#endif // EDITOR_H
+#endif  // EDITOR_H

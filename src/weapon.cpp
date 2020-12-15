@@ -24,6 +24,10 @@ weapon::weapon(int newAmmunition,
   canShoot = true;
 
   image[0] = load_png(imagePath.c_str(), NULL);
+  bulletsFired = 1;
+  aquired = false;
+  reloadTicks = 0;
+  team = 0;
 }
 
 weapon::~weapon() {

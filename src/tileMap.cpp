@@ -383,7 +383,7 @@ void tileMap::reload(bool instant) {
 
 // Draw tile map
 void tileMap::draw_map(BITMAP* tempSprite) {
-  for (int i = 0; i < mapTilesBack.size(); i++) {
+  for (unsigned int i = 0; i < mapTilesBack.size(); i++) {
     if ((mapTilesBack.at(i).getX() >= x - 256) &&
         (mapTilesBack.at(i).getX() < x + 1280) &&
         (mapTilesBack.at(i).getY() >= y - 256) &&
@@ -393,7 +393,7 @@ void tileMap::draw_map(BITMAP* tempSprite) {
       }
     }
   }
-  for (int i = 0; i < mapTiles.size(); i++) {
+  for (unsigned int i = 0; i < mapTiles.size(); i++) {
     if ((mapTiles.at(i).getX() >= x - 256) &&
         (mapTiles.at(i).getX() < x + 1280) &&
         (mapTiles.at(i).getY() >= y - 256) &&

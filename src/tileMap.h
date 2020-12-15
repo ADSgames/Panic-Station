@@ -5,11 +5,11 @@
 
 #include <allegro.h>
 #include <loadpng.h>
-#include <string>
-#include <vector>
+#include <fstream>
 #include <iostream>
 #include <sstream>
-#include <fstream>
+#include <string>
+#include <vector>
 
 #include <logg.h>
 
@@ -20,30 +20,30 @@
 
 using namespace std;
 
-class tileMap{
-  public:
-    tileMap(string fileName);
-    ~tileMap();
+class tileMap {
+ public:
+  tileMap(string fileName);
+  ~tileMap();
 
-    vector<tile> mapTiles;
-    vector<tile> mapTilesBack;
+  vector<tile> mapTiles;
+  vector<tile> mapTilesBack;
 
-    int x;
-    int y;
+  int x;
+  int y;
 
-    int width;
-    int height;
+  int width;
+  int height;
 
-    void load_images();
-    void reload( bool instant);
-    void draw_map(BITMAP* tempSprite);
-    void load(string fileName);
+  void load_images();
+  void reload(bool instant);
+  void draw_map(BITMAP* tempSprite);
+  void load(string fileName);
 
-  private:
-    string mapName;
+ private:
+  string mapName;
 
-    static volatile long frame;
-    static void change_frame();
+  static volatile long frame;
+  static void change_frame();
 };
 
 #endif

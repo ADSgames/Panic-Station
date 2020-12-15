@@ -82,6 +82,13 @@ player::player() {
   jump_height = 0;
   characterDir = 0;  // use LEFT and RIGHT
   yVelocity = 0;
+
+  canShoot = false;
+
+  finishLevel = false;
+  inLiquid = false;
+  headInLiquid = false;
+  idle = false;
 }
 
 // Load images of player
@@ -352,7 +359,7 @@ void player::draw(BITMAP* temp, int tile_map_x, int tile_map_y) {
                 characterDir + walking_animation_sequence / ANIMATION_SPEED);
 
   // Draw bullets
-  for (int i = 0; i < bullets.size(); i++) {
+  for (unsigned int i = 0; i < bullets.size(); i++) {
     bullets.at(i).draw(temp, tile_map_x, tile_map_y);
   }
 
@@ -389,13 +396,9 @@ void player::draw(BITMAP* temp, int tile_map_x, int tile_map_y) {
 
     if (currentWeapon != 0) {
       textprintf_ex(temp, munro_large, 480, 70, makecol(255, 255, 255),
-                    makecol(0, 0, -1), "%i",
-                    weapons[currentWeapon]->getAmmunition());
-      textprintf_ex(temp, munro_large, 512, 70, makecol(255, 255, 255),
-                    makecol(0, 0, -1), "/%i",
-                    weapons[currentWeapon]->getMagazine());
-      textprintf_ex(temp, munro_large, 530, 70, makecol(255, 255, 255),
-                    makecol(0, 0, -1), "/%i",
+                    makecol(0, 0, -1), "%i / %i / %i",
+                    weapons[currentWeapon]->getAmmunition(),
+                    weapons[currentWeapon]->getMagazine(),
                     weapons[currentWeapon]->getMagazine());
     }
 
@@ -473,7 +476,7 @@ void player::draw(BITMAP* temp, int tile_map_x, int tile_map_y) {
 // Spawn
 void player::spawncommand(tileMap* newMap) {
   stamina = 100;
-  for (int i = 0; i < newMap->mapTiles.size(); i++) {
+  for (unsigned int i = 0; i < newMap->mapTiles.size(); i++) {
     if (newMap->mapTiles.at(i).getType() == tile_spawn_player) {
       x = newMap->mapTiles.at(i).getX();
       y = newMap->mapTiles.at(i).getY();
@@ -544,7 +547,7 @@ void player::update(tileMap* newMap) {
   headInLiquid = false;
 
   // Check for collision
-  for (int i = 0; i < newMap->mapTiles.size(); i++) {
+  for (unsigned int i = 0; i < newMap->mapTiles.size(); i++) {
     if (collisionAny(
             x - 64 * 2, x + 64 * 2, newMap->mapTiles.at(i).getX(),
             newMap->mapTiles.at(i).getX() + newMap->mapTiles.at(i).getWidth(),
@@ -1144,7 +1147,7 @@ void player::update(tileMap* newMap) {
   switch_frame++;
 
   // Check for dangers
-  for (int i = 0; i < newMap->mapTiles.size(); i++) {
+  for (unsigned int i = 0; i < newMap->mapTiles.size(); i++) {
     // Die
     if (newMap->mapTiles.at(i).getAttribute() == harmful) {
       if (collisionAny(
@@ -1279,7 +1282,7 @@ void player::update(tileMap* newMap) {
   }
 
   // Falling (calculated seperately to ensure collision accurate)
-  for (int i = 0; i < newMap->mapTiles.size(); i++) {
+  for (unsigned int i = 0; i < newMap->mapTiles.size(); i++) {
     if (collisionAny(
             x - 64 * 2, x + 64 * 2, newMap->mapTiles.at(i).getX(),
             newMap->mapTiles.at(i).getX() + newMap->mapTiles.at(i).getWidth(),
@@ -1515,14 +1518,15 @@ void player::update(tileMap* newMap) {
     currentWeapon = 4;
   if (key[KEY_5] && weapons[5]->getAquired())
     currentWeapon = 5;
-  if (key[KEY_6] && weapons[6]->getAquired())
-    currentWeapon = 6;
-  if (key[KEY_7] && weapons[7]->getAquired())
-    currentWeapon = 7;
-  if (key[KEY_8] && weapons[8]->getAquired())
-    currentWeapon = 8;
-  if (key[KEY_9] && weapons[9]->getAquired())
-    currentWeapon = 9;
+
+  // if (key[KEY_6] && weapons[6]->getAquired())
+  //   currentWeapon = 6;
+  // if (key[KEY_7] && weapons[7]->getAquired())
+  //   currentWeapon = 7;
+  // if (key[KEY_8] && weapons[8]->getAquired())
+  //   currentWeapon = 8;
+  // if (key[KEY_9] && weapons[9]->getAquired())
+  //   currentWeapon = 9;
 
   // Harm player
   if (key[KEY_H])
@@ -1548,6 +1552,11 @@ void player::update(tileMap* newMap) {
       canShoot = true;
 
     triggerReleased = false;
+
+    std::cout << "Can shoot " << canShoot << " mag "
+              << weapons[currentWeapon]->getMagazine()
+              << " bullets:" << weapons[currentWeapon]->getBulletsFired()
+              << std::endl;
 
     if (canShoot) {
       if (weapons[currentWeapon]->getMagazine() > 0 && canShoot) {
@@ -1591,7 +1600,7 @@ void player::update(tileMap* newMap) {
   weapons[currentWeapon]->logic();
 
   // Update bullets
-  for (int i = 0; i < bullets.size(); i++) {
+  for (unsigned int i = 0; i < bullets.size(); i++) {
     bullets.at(i).update();
     if ((bullets.at(i).getContact(newMap) &&
          bullets.at(i).getContactFrameCounter() == 10) ||
