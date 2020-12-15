@@ -46,7 +46,7 @@ int mouseY(){
 //Checks if file exists
 bool fexists(const char *filename){
   ifstream ifile(filename);
-  return ifile;
+  return ifile.is_open();
 }
 
 //Random number generator. Use int random(lowest,highest);

@@ -1,6 +1,16 @@
 #include "weapon.h"
 
-weapon::weapon( int newAmmunition, int newSpeed, int newMagazineSize, int newMagazine, int newReloadSpeed, int newRateOfFire, int newDamage, std::string imagePath, std::string newName){
+#include <loadpng.h>
+
+weapon::weapon(int newAmmunition,
+               int newSpeed,
+               int newMagazineSize,
+               int newMagazine,
+               int newReloadSpeed,
+               int newRateOfFire,
+               int newDamage,
+               std::string imagePath,
+               std::string newName) {
   ammunition = newAmmunition;
   speed = newSpeed;
   magazineSize = newMagazineSize;
@@ -13,37 +23,36 @@ weapon::weapon( int newAmmunition, int newSpeed, int newMagazineSize, int newMag
   triggerReleased = true;
   canShoot = true;
 
-  image[0] = load_bitmap(imagePath.c_str(), NULL);
+  image[0] = load_png(imagePath.c_str(), NULL);
 }
 
-weapon::~weapon(){
-  //dtor
+weapon::~weapon() {
+  // dtor
 }
 
 // Shoot weapon
-void weapon::shoot(){
-  if(rateOfFire == -1 && !triggerReleased)
+void weapon::shoot() {
+  if (rateOfFire == -1 && !triggerReleased)
     canShoot = false;
   else
     canShoot = true;
 
-  triggerReleased=false;
+  triggerReleased = false;
 }
 
 // Logic of gun (reloading ect)
-void weapon::logic(){
+void weapon::logic() {
   // Reload time if empty
-  if( magazine == 0)
+  if (magazine == 0)
     reloadTicks++;
 
   // Reloaded
-  if( reloadTicks >= reloadSpeed){
-    reloadTicks=0;
-    if( ammunition >= magazineSize){
+  if (reloadTicks >= reloadSpeed) {
+    reloadTicks = 0;
+    if (ammunition >= magazineSize) {
       ammunition -= magazineSize;
       magazine = magazineSize;
-    }
-    else{
+    } else {
       magazine = ammunition;
       ammunition = 0;
     }
@@ -51,14 +60,14 @@ void weapon::logic(){
 }
 
 // Give some ammo
-void weapon::addAmmo( int amount){
+void weapon::addAmmo(int amount) {
   ammunition += amount;
 }
 
 // Draw gun to screen
-void weapon::draw( BITMAP *tempBuffer, int handX, int handY, bool flipped){
-  if( !flipped)
-    draw_sprite( tempBuffer, image[0], handX - image[0] -> w, handY);
+void weapon::draw(BITMAP* tempBuffer, int handX, int handY, bool flipped) {
+  if (!flipped)
+    draw_sprite(tempBuffer, image[0], handX - image[0]->w, handY);
   else
-     draw_sprite_h_flip( tempBuffer, image[0], handX, handY);
+    draw_sprite_h_flip(tempBuffer, image[0], handX, handY);
 }
