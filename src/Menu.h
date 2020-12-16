@@ -11,7 +11,7 @@
 #include <logg.h>
 
 #include "globals.h"
-#include "tilemap.h"
+#include "tileMap.h"
 #include "tools.h"
 
 class Menu : public GameState {
